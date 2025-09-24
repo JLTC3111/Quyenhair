@@ -65,19 +65,18 @@
             box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
         }
 
-        /* Main Content Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, rgba(74, 144, 226, 0.9), rgba(44, 62, 80, 0.9));
-            color: white;
-            padding: 120px 0 80px;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(0, 0, 0);
+            padding: 2rem;
             position: relative;
             overflow: hidden;
         }
@@ -152,7 +151,6 @@
             to { opacity: 1; }
         }
 
-        /* Enhanced Swiper Styles */
         .swiper {
             width: 100%;
             max-width: 900px;
@@ -319,7 +317,6 @@
             box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
         }
 
-        /* Footer */
         .footer {
             background: #333;
             color: white;
@@ -409,11 +406,15 @@
             <div id="gallery" class="swiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=600&fit=crop" alt="Hair Model 1" /></div>
-                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&h=600&fit=crop" alt="Hair Model 2" /></div>
-                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&h=600&fit=crop" alt="Hair Model 3" /></div>
-                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&h=600&fit=crop" alt="Hair Model 4" /></div>
-                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&h=600&fit=crop" alt="Hair Model 5" /></div>
-                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1621784563330-caee0b138a00?w=800&h=600&fit=crop" alt="Hair Model 6" /></div>
+                    <div class="swiper-slide"><img src="public/models/2.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/3.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/4.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/5.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/6.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/7.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/8.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/9.jpg" /></div>
+                    <div class="swiper-slide"><img src="public/models/10.jpg" /></div
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -474,7 +475,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Initialize Swiper with enhanced features
         const swiper = new Swiper('.swiper', {
             slidesPerView: 1,
             spaceBetween: 0,
@@ -508,7 +508,6 @@
             }
         });
 
-        // Smooth scrolling for navigation links
         document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -522,7 +521,6 @@
             });
         });
 
-        // Add scroll effect to navigation
         let lastScrollTop = 0;
         window.addEventListener('scroll', function() {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -545,7 +543,6 @@
             lastScrollTop = scrollTop;
         });
 
-        // Add intersection observer for fade-in animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -560,7 +557,6 @@
             });
         }, observerOptions);
 
-        // Observe contact cards
         document.querySelectorAll('.contact-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(30px)';
