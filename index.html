@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swiper Test</title>
+
+  <!-- ✅ Swiper CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+    nav {
+      display: flex;
+      justify-content: center;  
+      align-items: center;
+      border: 1px solid red;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .swiper {
+      width: 100%;
+      max-width: 800px;
+      height: 600px;
+      margin: 50px auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    .swiper-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .swiper-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body> 
+  <nav> 
+    <ul style="list-style: none; display: flex; gap: 20px; padding: 10px; background-color: #f8f8f8; margin: 0;">
+      <li><a href="#" style="text-decoration: none; color: #333;">Trang Chủ</a></li>
+      <li><a href="#" style="text-decoration: none; color: #333;">Về Chúng Tôi</a></li>
+      <li><a href="#" style="text-decoration: none; color: #333;">Dịch Vụ</a></li>
+      <li><a href="#" style="text-decoration: none; color: #333;">Liên Hệ</a></li>
+    </ul>
+  </nav>
+  <div class="intro-sect">
+     <h1 style="text-align: center;">Quyền Hair</h1>
+  </div>  
+  <div class ="main-content">
+    <p style="text-align: center; max-width: 600px; margin: 20px auto;">
+      Cửa hàng tóc Quyền Hair chuyên cung cấp các sản phẩm tóc giả chất lượng cao, đa dạng về kiểu dáng và màu sắc, phù hợp với mọi nhu cầu của khách hàng. Chúng tôi cam kết mang đến sự hài lòng tuyệt đối với dịch vụ tư vấn chuyên nghiệp và giá cả hợp lý.
+      Địa Chỉ: toà nhà cc 101B, khu đô thị Mailand, xã Sơn Đồng, tp Hà Nội. 
+    </p>
+  <!-- ✅ Swiper container -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
+     
+      <div class="swiper-slide"><img src="public/models/2.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/3.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/4.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/5.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/6.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/7.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/8.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/9.jpg" alt="models" /></div>
+      <div class="swiper-slide"><img src="public/models/10.jpg" alt="models" /></div>
+    </div>
+
+    <!-- ✅ Navigation buttons -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+    <!-- ✅ Pagination dots -->
+    <div class="swiper-pagination"></div>
+  </div>
+  <div class = "main-contact">
+    <p style="text-align: center; max-width: 600px; margin: 20px auto;">
+      For inquiries, please contact us at <a href="mailto: quyenhair@info.com">quyenhair@info.com</a>
+      Call us: <a href="tel: 0966856191">+84 966 856 191</a>
+    </p>
+  </div>
+  <div class="footer" style="text-align: center; padding: 20px; background-color: #f8f8f8; margin-top: 50px;">
+    <p>&copy; 2024 Quyenhair. All rights reserved.</p>
+
+  <!-- ✅ Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+    // ✅ Initialize Swiper
+    const swiper = new Swiper('.swiper', {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+    });
+
+    console.log('Swiper initialized:', swiper);
+  </script>
+</body>
+</html>
