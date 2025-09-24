@@ -1,117 +1,574 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Swiper Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quyền Hair - Làm Tóc Chất Lượng Cao</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <!-- ✅ Swiper CSS -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-  />
+        html {
+            scroll-behavior: smooth;
+        }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-    }
-    nav {
-      display: flex;
-      justify-content: center;  
-      align-items: center;
-      border: 1px solid red;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .swiper {
-      width: 100%;
-      max-width: 800px;
-      height: 600px;
-      margin: 50px auto;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-    .swiper-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .swiper-slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  </style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        nav ul li a:hover {
+            color: rgb(20, 0, 53);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
+        }
+
+        /* Main Content Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.9), rgba(44, 62, 80, 0.9));
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>') repeat;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-section .subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Main Content Section */
+        .main-content {
+            background: white;
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .intro-text {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            animation: fadeIn 1s ease 0.5s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Enhanced Swiper Styles */
+        .swiper {
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            margin: 0 auto 80px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .swiper:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+
+        .swiper-slide {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .swiper-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: white !important;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px !important;
+            height: 50px !important;
+            transition: all 0.3s ease;
+        }
+
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: rgba(74, 144, 226, 0.8);
+            transform: scale(1.1);
+        }
+
+        .swiper-pagination-bullet {
+            background: rgba(74, 144, 226, 0.7) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #4a90e2 !important;
+            transform: scale(1.2) !important;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .contact-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .contact-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(45deg, #4a90e2, #2c3e50);
+            border-radius: 2px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, #4a90e2, #2c3e50);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .contact-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #4a90e2, #2c3e50);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .contact-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .contact-link {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border: 2px solid #4a90e2;
+            border-radius: 25px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: #4a90e2;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4a90e2, transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+                padding: 20px;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .swiper {
+                height: 400px;
+                margin: 0 20px 60px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
 </head>
-<body> 
-  <nav> 
-    <ul style="list-style: none; display: flex; gap: 20px; padding: 10px; background-color: #f8f8f8; margin: 0;">
-      <li><a href="#" style="text-decoration: none; color: #333;">Trang Chủ</a></li>
-      <li><a href="#" style="text-decoration: none; color: #333;">Về Chúng Tôi</a></li>
-      <li><a href="#" style="text-decoration: none; color: #333;">Dịch Vụ</a></li>
-      <li><a href="#" style="text-decoration: none; color: #333;">Liên Hệ</a></li>
-    </ul>
-  </nav>
-  <div class="intro-sect">
-     <h1 style="text-align: center;">Quyền Hair</h1>
-  </div>  
-  <div class ="main-content">
-    <p style="text-align: center; max-width: 600px; margin: 20px auto;">
-      Cửa hàng tóc Quyền Hair chuyên cung cấp các sản phẩm tóc giả chất lượng cao, đa dạng về kiểu dáng và màu sắc, phù hợp với mọi nhu cầu của khách hàng. Chúng tôi cam kết mang đến sự hài lòng tuyệt đối với dịch vụ tư vấn chuyên nghiệp và giá cả hợp lý.
-      Địa Chỉ: toà nhà cc 101B, khu đô thị Mailand, xã Sơn Đồng, tp Hà Nội. 
-    </p>
-  <!-- ✅ Swiper container -->
-  <div class="swiper">
-    <div class="swiper-wrapper">
-     
-      <div class="swiper-slide"><img src="public/models/2.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/3.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/4.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/5.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/6.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/7.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/8.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/9.jpg" alt="models" /></div>
-      <div class="swiper-slide"><img src="public/models/10.jpg" alt="models" /></div>
-    </div>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Trang Chủ</a></li>
+            <li><a href="#about">Về Chúng Tôi</a></li>
+            <li><a href="#gallery">Thư Viện</a></li>
+            <li><a href="#contact">Liên Hệ</a></li>
+        </ul>
+    </nav>
 
-    <!-- ✅ Navigation buttons -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Quyền Hair</h1>
+                <p class="subtitle">Làm Tóc Chất Lượng Cao - Phong Cách Đẳng Cấp</p>
+            </div>
+        </div>
+    </section>
 
-    <!-- ✅ Pagination dots -->
-    <div class="swiper-pagination"></div>
-  </div>
-  <div class = "main-contact">
-    <p style="text-align: center; max-width: 600px; margin: 20px auto;">
-      For inquiries, please contact us at <a href="mailto: quyenhair@info.com">quyenhair@info.com</a>
-      Call us: <a href="tel: 0966856191">+84 966 856 191</a>
-    </p>
-  </div>
-  <div class="footer" style="text-align: center; padding: 20px; background-color: #f8f8f8; margin-top: 50px;">
-    <p>&copy; 2024 Quyenhair. All rights reserved.</p>
+    <section id="about" class="main-content">
+        <div class="container">
+            <p class="intro-text">
+                Cửa hàng tóc Quyền Hair chuyên cung cấp các sản phẩm tóc giả chất lượng cao, đa dạng về kiểu dáng và màu sắc, 
+                phù hợp với mọi nhu cầu của khách hàng. Chúng tôi cam kết mang đến sự hài lòng tuyệt đối với dịch vụ tư vấn 
+                chuyên nghiệp và giá cả hợp lý.<br><br>
+                <strong>Địa Chỉ:</strong> Toà nhà CC 101B, Khu đô thị Mailand, Xã Sơn Đồng, TP Hà Nội
+            </p>
 
-  <!-- ✅ Swiper JS -->
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+            <div id="gallery" class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=600&fit=crop" alt="Hair Model 1" /></div>
+                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&h=600&fit=crop" alt="Hair Model 2" /></div>
+                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=800&h=600&fit=crop" alt="Hair Model 3" /></div>
+                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800&h=600&fit=crop" alt="Hair Model 4" /></div>
+                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?w=800&h=600&fit=crop" alt="Hair Model 5" /></div>
+                    <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1621784563330-caee0b138a00?w=800&h=600&fit=crop" alt="Hair Model 6" /></div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    // ✅ Initialize Swiper
-    const swiper = new Swiper('.swiper', {
-      slidesPerView: 1,
-      spaceBetween: 10,
-      loop: true,
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-      navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-      },
-    });
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Liên Hệ Với Chúng Tôi</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email</h3>
+                    <p>Gửi email cho chúng tôi để được tư vấn chi tiết về sản phẩm và dịch vụ</p>
+                    <a href="mailto:info@quyenhair.com" class="contact-link">info@quyenhair.com</a>
+                </div>
 
-    console.log('Swiper initialized:', swiper);
-  </script>
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Điện Thoại</h3>
+                    <p>Liên hệ trực tiếp qua điện thoại để được hỗ trợ nhanh chóng</p>
+                    <a href="tel:+84966856191" class="contact-link">+84 966 856 191</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Địa Chỉ Cửa Hàng</h3>
+                    <p>Ghé thăm showroom của chúng tôi để trải nghiệm trực tiếp các sản phẩm</p>
+                    <a href="https://maps.google.com" class="contact-link">Xem Bản Đồ</a>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Giờ Làm Việc</h3>
+                    <p>Thứ 2 - Chủ Nhật<br>8:00 - 20:00</p>
+                    <a href="#" class="contact-link">Đặt Lịch Hẹn</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Quyền Hair. All rights reserved. | Thiết kế với ❤️ tại Việt Nam</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper with enhanced features
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            loop: true,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            keyboard: {
+                enabled: true,
+            },
+            on: {
+                slideChange: function () {
+                    // Add animation to slide content
+                    const activeSlide = this.slides[this.activeIndex];
+                    activeSlide.style.animation = 'slideIn 0.6s ease forwards';
+                }
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', function() {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const nav = document.querySelector('nav');
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                nav.style.transform = 'translateY(-100%)';
+            } else {
+                nav.style.transform = 'translateY(0)';
+            }
+            
+            if (scrollTop > 50) {
+                nav.style.background = 'rgba(255, 255, 255, 0.98)';
+                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.15)';
+            } else {
+                nav.style.background = 'rgba(255, 255, 255, 0.95)';
+                nav.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Add intersection observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe contact cards
+        document.querySelectorAll('.contact-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        console.log('Enhanced Swiper initialized:', swiper);
+    </script>
 </body>
 </html>
