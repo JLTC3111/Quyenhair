@@ -1,0 +1,44 @@
+{
+  "name": "Quyền Hair - Tóc Giả Chất Lượng Cao",
+  "short_name": "Quyền Hair",
+  "description": "Cửa hàng tóc giả chất lượng cao tại Hà Nội",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4a90e2",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "public/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "public/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["beauty", "shopping", "lifestyle"],
+  "lang": "vi",
+  "dir": "ltr",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Liên Hệ",
+      "short_name": "Liên Hệ",
+      "description": "Liên hệ với Quyền Hair",
+      "url": "/#contact",
+      "icons": [{ "src": "public/favicon.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Thư Viện",
+      "short_name": "Thư Viện",
+      "description": "Xem sản phẩm tóc giả",
+      "url": "/#gallery",
+      "icons": [{ "src": "public/favicon.png", "sizes": "192x192" }]
+    }
+  ]
+}
