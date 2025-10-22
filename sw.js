@@ -3,7 +3,7 @@
  * Provides offline functionality and caching
  */
 
-const CACHE_NAME = 'quyenhair-v2';
+const CACHE_NAME = 'quyenhair-v3';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -58,6 +58,11 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+    // Skip non-HTTP/HTTPS requests (chrome-extension, etc.)
+    if (!event.request.url.startsWith('http')) {
+        return;
+    }
+
     event.respondWith(
         caches.match(event.request)
             .then((response) => {
