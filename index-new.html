@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -5,187 +6,626 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
+
     <!-- Primary Meta Tags -->
     <title>Quyền Hair - Tóc Giả Chất Lượng Cao | Hà Nội</title>
-    <meta name="description" content="Cửa hàng tóc Quyền Hair chuyên cung cấp tóc giả chất lượng cao, đa dạng kiểu dáng. Địa chỉ: CC 101B, Khu đô thị Mailand, Sơn Đồng, Hà Nội.">
-    <meta name="keywords" content="tóc giả, tóc giả chất lượng cao, mua tóc giả Hà Nội, Quyền Hair, tóc giả đẹp, salon tóc">
+    <meta name="description" content="Quyền Hair cung cấp tóc giả cao cấp, dịch vụ chăm sóc tóc chuyên nghiệp và tư vấn phong cách tại Hà Nội.">
+    <meta name="keywords" content="tóc giả, tóc giả cao cấp, quyển hair, salon tóc, chăm sóc tóc, tóc giả hà nội">
     <meta name="author" content="Quyền Hair">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Quyền Hair - Tóc Giả Chất Lượng Cao">
-    <meta property="og:description" content="Cửa hàng tóc Quyền Hair chuyên cung cấp tóc giả chất lượng cao tại Hà Nội">
+    <meta property="og:description" content="Khám phá bộ sưu tập tóc giả cao cấp và dịch vụ chăm sóc tóc chuyên nghiệp tại Quyền Hair.">
     <meta property="og:image" content="public/favicon.png">
-    
+    <meta property="og:url" content="https://quyenhair.vn/">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Quyền Hair - Tóc Giả Chất Lượng Cao | Hà Nội">
+    <meta name="twitter:description" content="Tóc giả cao cấp, tư vấn chuyên nghiệp và dịch vụ chăm sóc trọn gói tại Quyền Hair.">
+    <meta name="twitter:image" content="public/favicon.png">
+
     <!-- Favicon & Manifest -->
     <link rel="icon" type="image/png" href="public/favicon.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4a90e2">
-    
+
     <!-- Preconnect for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    
+
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles-enhanced.css">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HairSalon",
+        "name": "Quyền Hair",
+        "image": "https://quyenhair.vn/public/favicon.png",
+        "url": "https://quyenhair.vn/",
+        "telephone": "+84 966 856 191",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "CC 101B, Khu đô thị Mailand, Sơn Đồng",
+            "addressLocality": "Hà Nội",
+            "addressCountry": "VN"
+        },
+        "openingHoursSpecification": [{
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+                "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"
+            ],
+            "opens": "08:00",
+            "closes": "20:00"
+        }]
+    }
+    </script>
 </head>
 <body>
-    <!-- Skip link for accessibility -->
     <a href="#main" class="skip-link">Bỏ qua đến nội dung chính</a>
-    
+
+    <!-- Top Bar -->
+    <div class="top-bar" aria-label="Thông tin liên hệ nhanh">
+        <div class="container top-bar__content">
+            <div class="top-bar__left">
+                <a class="top-bar__link" href="tel:+84966856191">
+                    <i class="fas fa-phone" aria-hidden="true"></i>
+                    +84 966 856 191
+                </a>
+                <a class="top-bar__link" href="mailto:info@quyenhair.com">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
+                    info@quyenhair.com
+                </a>
+                <span class="top-bar__link">
+                    <i class="fas fa-clock" aria-hidden="true"></i>
+                    08:00 - 20:00 (Thứ 2 - Chủ Nhật)
+                </span>
+            </div>
+            <div class="top-bar__right">
+                <span class="top-bar__link">
+                    <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                    CC 101B Mailand, Sơn Đồng, Hà Nội
+                </span>
+                <div class="top-bar__social" aria-label="Mạng xã hội">
+                    <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook Quyền Hair"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram Quyền Hair"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube Quyền Hair"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Navigation -->
-    <nav class="nav" role="navigation" aria-label="Main navigation">
+    <nav class="nav" role="navigation" aria-label="Điều hướng chính">
         <div class="nav__container">
             <a href="#home" class="nav__logo" aria-label="Quyền Hair - Trang chủ">
                 <i class="fas fa-cut" aria-hidden="true"></i>
                 <span>Quyền Hair</span>
             </a>
-            
-            <button class="nav__toggle" aria-label="Toggle menu" aria-expanded="false">
+
+            <button class="nav__toggle" aria-label="Mở menu" aria-expanded="false">
                 <span class="nav__toggle-bar"></span>
                 <span class="nav__toggle-bar"></span>
                 <span class="nav__toggle-bar"></span>
             </button>
-            
+
             <ul class="nav__menu">
-                <li><a href="#home" class="nav__link">Trang Chủ</a></li>
-                <li><a href="#about" class="nav__link">Về Chúng Tôi</a></li>
-                <li><a href="#gallery" class="nav__link">Thư Viện</a></li>
-                <li><a href="#contact" class="nav__link">Liên Hệ</a></li>
+                <li class="nav__item"><a href="#home" class="nav__link">Trang Chủ</a></li>
+                <li class="nav__item"><a href="#about" class="nav__link">Giới Thiệu</a></li>
+                <li class="nav__item nav__item--dropdown">
+                    <a href="#services" class="nav__link" aria-haspopup="true" aria-expanded="false">Dịch Vụ</a>
+                    <ul class="nav__dropdown" aria-label="Danh sách dịch vụ">
+                        <li><a href="#services">Chăm sóc tóc</a></li>
+                        <li><a href="#products">Sản phẩm tóc giả</a></li>
+                        <li><a href="#booking">Đặt lịch tư vấn</a></li>
+                    </ul>
+                </li>
+                <li class="nav__item"><a href="#gallery" class="nav__link">Thư Viện</a></li>
+                <li class="nav__item"><a href="#team" class="nav__link">Đội Ngũ</a></li>
+                <li class="nav__item"><a href="#blog" class="nav__link">Tin Tức</a></li>
+                <li class="nav__item"><a href="#contact" class="nav__link">Liên Hệ</a></li>
             </ul>
+
+            <div class="nav__actions">
+                <button class="nav__search-btn" type="button" aria-label="Mở tìm kiếm">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                </button>
+                <a href="#booking" class="btn btn--primary btn--sm">Đặt Lịch</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero" role="banner">
-        <div class="container">
-            <div class="hero__content">
-                <h1 class="hero__title">Quyền Hair</h1>
-                <p class="hero__subtitle">Tóc Giả Chất Lượng Cao - Phong Cách Đẳng Cấp</p>
-                <div class="hero__cta">
-                    <a href="#contact" class="btn btn--primary">
-                        <i class="fas fa-phone" aria-hidden="true"></i>
-                        Liên Hệ Ngay
-                    </a>
-                    <a href="#gallery" class="btn btn--outline">
-                        <i class="fas fa-images" aria-hidden="true"></i>
-                        Xem Sản Phẩm
-                    </a>
+    <!-- Hero Slider -->
+    <section id="home" class="hero-slider" role="banner">
+        <div class="hero-swiper swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-slide__bg" style="background-image: url('public/models/1.jpg');" role="presentation"></div>
+                    <div class="hero-slide__overlay" aria-hidden="true"></div>
+                    <div class="container">
+                        <div class="hero-slide__content">
+                            <h1 class="hero-slide__title">Tóc Giả Cao Cấp Cho Phong Cách Riêng Bạn</h1>
+                            <p class="hero-slide__subtitle">Chọn lựa hơn 100 mẫu tóc giả chất lượng cao, phù hợp với mọi khuôn mặt và phong cách.</p>
+                            <div class="hero-slide__cta">
+                                <a href="#products" class="btn btn--primary btn--lg">Xem Sản Phẩm</a>
+                                <a href="#booking" class="btn btn--outline btn--lg">Đặt Lịch Tư Vấn</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide hero-slide">
+                    <div class="hero-slide__bg" style="background-image: url('public/models/5.jpg');" role="presentation"></div>
+                    <div class="hero-slide__overlay" aria-hidden="true"></div>
+                    <div class="container">
+                        <div class="hero-slide__content">
+                            <h2 class="hero-slide__title">Dịch Vụ Chăm Sóc Tóc Trọn Gói</h2>
+                            <p class="hero-slide__subtitle">Tư vấn cá nhân hóa, thiết kế kiểu tóc chuyên nghiệp và bảo hành chu đáo.</p>
+                            <div class="hero-slide__cta">
+                                <a href="#services" class="btn btn--primary btn--lg">Khám Phá Dịch Vụ</a>
+                                <a href="#contact" class="btn btn--outline btn--lg">Liên Hệ Ngay</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="swiper-pagination" aria-label="Điều hướng slide"></div>
+            <button class="swiper-button-prev" aria-label="Slide trước"></button>
+            <button class="swiper-button-next" aria-label="Slide tiếp theo"></button>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main id="main" class="section section--white">
-        <div class="container">
-            <h2 class="section__title" id="about">Về Chúng Tôi</h2>
-            <p class="intro-text">
-                Cửa hàng tóc <strong>Quyền Hair</strong> chuyên cung cấp các sản phẩm <strong>tóc giả chất lượng cao</strong>, đa dạng về kiểu dáng và màu sắc, 
-                phù hợp với mọi nhu cầu của khách hàng. Chúng tôi cam kết mang đến sự hài lòng tuyệt đối với dịch vụ tư vấn 
-                chuyên nghiệp và giá cả hợp lý.<br><br>
-                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> <strong>Địa Chỉ:</strong> Toà nhà CC 101B, Khu đô thị Mailand, Xã Sơn Đồng, TP Hà Nội
-            </p>
-
-            <!-- Gallery Section -->
-            <section id="gallery" aria-label="Thư viện ảnh sản phẩm">
-                <h3 class="sr-only">Thư Viện Sản Phẩm</h3>
-                <div class="swiper">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide"><img src="public/models/1.jpg" alt="Mẫu tóc giả 1 - Kiểu tóc dài" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/2.jpg" alt="Mẫu tóc giả 2 - Kiểu tóc ngắn" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/3.jpg" alt="Mẫu tóc giả 3 - Kiểu tóc xoăn" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/4.jpg" alt="Mẫu tóc giả 4 - Kiểu tóc thẳng" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/5.jpg" alt="Mẫu tóc giả 5 - Kiểu tóc bob" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/6.jpg" alt="Mẫu tóc giả 6 - Kiểu tóc layer" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/7.jpg" alt="Mẫu tóc giả 7 - Kiểu tóc pixie" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/8.jpg" alt="Mẫu tóc giả 8 - Kiểu tóc dài xoăn" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/9.jpg" alt="Mẫu tóc giả 9 - Kiểu tóc ombre" loading="lazy" /></div>
-                        <div class="swiper-slide"><img src="public/models/10.jpg" alt="Mẫu tóc giả 10 - Kiểu tóc highlight" loading="lazy" /></div>
-                    </div>
-                    <button class="swiper-button-next" aria-label="Next slide"></button>
-                    <button class="swiper-button-prev" aria-label="Previous slide"></button>
-                    <div class="swiper-pagination" role="tablist"></div>
+    <main id="main">
+        <!-- Services Section -->
+        <section id="services" class="section section--white" aria-labelledby="services-title">
+            <div class="container">
+                <h2 id="services-title" class="section__title">Dịch Vụ Nổi Bật</h2>
+                <p class="intro-text">Đội ngũ chuyên gia nhiều năm kinh nghiệm mang đến giải pháp toàn diện cho vẻ đẹp mái tóc của bạn.</p>
+                <div class="services-grid">
+                    <article class="service-card">
+                        <div class="service-card__icon" aria-hidden="true"><i class="fas fa-gem"></i></div>
+                        <h3>Tóc Giả Cao Cấp</h3>
+                        <p>Chất liệu tự nhiên, nhẹ, thoáng và ôm sát da đầu giúp bạn tự tin suốt ngày dài.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-card__icon" aria-hidden="true"><i class="fas fa-user-tie"></i></div>
+                        <h3>Tư Vấn Cá Nhân</h3>
+                        <p>Stylist chuyên nghiệp phân tích khuôn mặt, phong cách để gợi ý giải pháp phù hợp nhất.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-card__icon" aria-hidden="true"><i class="fas fa-hand-holding-heart"></i></div>
+                        <h3>Bảo Hành Trọn Đời</h3>
+                        <p>Dịch vụ chăm sóc, vệ sinh và chỉnh sửa định kỳ cho khách hàng thân thiết.</p>
+                    </article>
+                    <article class="service-card">
+                        <div class="service-card__icon" aria-hidden="true"><i class="fas fa-shipping-fast"></i></div>
+                        <h3>Giao Hàng Toàn Quốc</h3>
+                        <p>Đóng gói an toàn, giao nhanh trong 24h tại Hà Nội và 48h toàn quốc.</p>
+                    </article>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section section--gray" aria-labelledby="about-title">
+            <div class="container">
+                <div class="about-content">
+                    <div>
+                        <h2 id="about-title" class="section__title">Quyền Hair - Hành Trình Cùng Bạn Tạo Dựng Phong Cách</h2>
+                        <p class="intro-text">Thành lập từ năm 2012, Quyền Hair tự hào đồng hành cùng hơn 15.000 khách hàng tại Việt Nam, mang đến giải pháp tóc giả chuẩn Âu với giá phải chăng.</p>
+                        <div class="about-features" role="list">
+                            <div class="about-feature" role="listitem">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                <span>Nguyên liệu xuất khẩu từ Hàn Quốc, Nhật Bản</span>
+                            </div>
+                            <div class="about-feature" role="listitem">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                <span>Stylist đạt chứng chỉ quốc tế</span>
+                            </div>
+                            <div class="about-feature" role="listitem">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                <span>Chính sách đổi trả trong 7 ngày</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stats-grid" aria-label="Các con số ấn tượng">
+                        <article class="stat-card">
+                            <span class="stat-card__number">12+</span>
+                            <p>Năm kinh nghiệm</p>
+                        </article>
+                        <article class="stat-card">
+                            <span class="stat-card__number">15K+</span>
+                            <p>Khách hàng hài lòng</p>
+                        </article>
+                        <article class="stat-card">
+                            <span class="stat-card__number">120+</span>
+                            <p>Mẫu tóc độc quyền</p>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section section--white" aria-labelledby="gallery-title">
+            <div class="container">
+                <h2 id="gallery-title" class="section__title">Bộ Sưu Tập Mới Nhất</h2>
+                <p class="intro-text">Khám phá các kiểu tóc được yêu thích nhất mùa này. Mỗi mẫu đều có sẵn tại showroom của chúng tôi.</p>
+                <div class="gallery-swiper swiper" aria-label="Thư viện ảnh sản phẩm">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img src="public/models/1.jpg" alt="Kiểu tóc dài suôn mượt" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/2.jpg" alt="Kiểu tóc ngắn uốn cụp" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/3.jpg" alt="Kiểu tóc xoăn sóng nước" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/4.jpg" alt="Kiểu tóc bob thanh lịch" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/5.jpg" alt="Kiểu tóc nhuộm highlight" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/6.jpg" alt="Kiểu tóc layer tự nhiên" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/7.jpg" alt="Kiểu tóc pixie năng động" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/8.jpg" alt="Kiểu tóc dài xoăn lọn" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/9.jpg" alt="Kiểu tóc ombre thời thượng" loading="lazy"></div>
+                        <div class="swiper-slide"><img src="public/models/10.jpg" alt="Kiểu tóc dài nhuộm vàng" loading="lazy"></div>
+                    </div>
+                    <div class="swiper-pagination" aria-label="Điều hướng thư viện"></div>
+                    <button class="swiper-button-prev" aria-label="Ảnh trước"></button>
+                    <button class="swiper-button-next" aria-label="Ảnh tiếp"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section section--gray" aria-labelledby="products-title">
+            <div class="container">
+                <h2 id="products-title" class="section__title">Sản Phẩm Được Yêu Thích</h2>
+                <p class="intro-text">Tất cả sản phẩm đều có chứng nhận nguồn gốc, bảo hành đường may và bảo dưỡng định kỳ.</p>
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="public/models/3.jpg" alt="Tóc giả dáng dài xoăn biển lớn" loading="lazy">
+                            <span class="product-card__badge">Mới</span>
+                        </div>
+                        <div class="product-card__content">
+                            <h3>Tóc Giả Xoăn LUXE</h3>
+                            <p class="product-card__desc">Chất liệu sợi tổng hợp cao cấp, khả năng chịu nhiệt đến 180°C, dễ dàng tạo kiểu lại.</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">3.200.000₫</span>
+                                <a href="#booking" class="btn btn--primary btn--sm">Đặt Hàng</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="public/models/6.jpg" alt="Tóc giả layer nhuộm nâu" loading="lazy">
+                            <span class="product-card__badge product-card__badge--sale">Giảm 20%</span>
+                        </div>
+                        <div class="product-card__content">
+                            <h3>Tóc Layer SilkTouch</h3>
+                            <p class="product-card__desc">Sợi tóc thật 100%, xử lý khử khuẩn và bảo vệ khỏi tia UV, mềm và nhẹ như tóc thật.</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">4.990.000₫</span>
+                                <a href="tel:+84966856191" class="btn btn--outline btn--sm">Tư Vấn</a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="product-card">
+                        <div class="product-card__image">
+                            <img src="public/models/9.jpg" alt="Tóc giả nhuộm màu pastel" loading="lazy">
+                        </div>
+                        <div class="product-card__content">
+                            <h3>Bộ Tóc Ombre Signature</h3>
+                            <p class="product-card__desc">Thiết kế màu độc quyền, độ bền màu lên tới 18 tháng, phù hợp cho những buổi trình diễn.</p>
+                            <div class="product-card__footer">
+                                <span class="product-card__price">Liên hệ</span>
+                                <a href="mailto:info@quyenhair.com" class="btn btn--primary btn--sm">Gửi Email</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="section section--white" aria-labelledby="team-title">
+            <div class="container">
+                <h2 id="team-title" class="section__title">Đội Ngũ Chuyên Gia</h2>
+                <p class="intro-text">Mỗi stylist tại Quyền Hair đều được đào tạo bài bản và cập nhật xu hướng thời trang quốc tế.</p>
+                <div class="team-grid">
+                    <article class="team-card">
+                        <div class="team-card__image">
+                            <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=800&q=80" alt="Stylist Nguyễn Quyền">
+                            <div class="team-card__social">
+                                <a href="https://www.facebook.com" aria-label="Facebook Nguyễn Quyền" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com" aria-label="Instagram Nguyễn Quyền" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-card__content">
+                            <h3>Nguyễn Quyền</h3>
+                            <p class="team-card__role">Founder & Master Stylist</p>
+                            <p>15 năm kinh nghiệm tạo mẫu tóc giả cao cấp cho nghệ sĩ và doanh nhân.</p>
+                        </div>
+                    </article>
+                    <article class="team-card">
+                        <div class="team-card__image">
+                            <img src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?auto=format&fit=crop&w=800&q=80" alt="Stylist Trần Thu Hà">
+                            <div class="team-card__social">
+                                <a href="https://www.facebook.com" aria-label="Facebook Trần Thu Hà" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.tiktok.com" aria-label="TikTok Trần Thu Hà" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-card__content">
+                            <h3>Trần Thu Hà</h3>
+                            <p class="team-card__role">Lead Colorist</p>
+                            <p>Chuyên gia phối màu tóc với hơn 100 công trình nhuộm ombre và balayage thành công.</p>
+                        </div>
+                    </article>
+                    <article class="team-card">
+                        <div class="team-card__image">
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="Stylist Lê Minh Phúc">
+                            <div class="team-card__social">
+                                <a href="https://www.facebook.com" aria-label="Facebook Lê Minh Phúc" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.instagram.com" aria-label="Instagram Lê Minh Phúc" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                        <div class="team-card__content">
+                            <h3>Lê Minh Phúc</h3>
+                            <p class="team-card__role">Senior Hair Technician</p>
+                            <p>Chuyên viên chăm sóc, bảo dưỡng tóc giả và đào tạo kỹ thuật viên mới.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Section -->
+        <section id="blog" class="section section--gray" aria-labelledby="blog-title">
+            <div class="container">
+                <h2 id="blog-title" class="section__title">Góc Chia Sẻ Kiến Thức</h2>
+                <p class="intro-text">Cập nhật xu hướng thời trang tóc, mẹo chăm sóc tóc giả và câu chuyện khách hàng.</p>
+                <div class="blog-grid">
+                    <article class="blog-card">
+                        <div class="blog-card__image"></div>
+                            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="Xu hướng tóc 2025">
+                            <span class="blog-card__date"><span class="blog-card__day">12</span><span class="blog-card__month">Th3</span></span>
+                        </div>
+                        <div class="blog-card__content">
+                            <div class="blog-card__meta">
+                                <span><i class="fas fa-user"></i> Quyền Hair</span>
+                                <span><i class="fas fa-clock"></i> 5 phút đọc</span>
+                            </div>
+                            <h3>5 Xu Hướng Tóc Giả Dẫn Đầu Năm 2025</h3>
+                            <p>Khám phá những kiểu tóc được săn đón nhất giúp bạn luôn nổi bật trong mọi khung hình.</p>
+                            <a href="#" class="blog-card__link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <div class="blog-card__image">
+                            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80" alt="Mẹo chăm sóc tóc giả">
+                            <span class="blog-card__date"><span class="blog-card__day">05</span><span class="blog-card__month">Th2</span></span>
+                        </div>
+                        <div class="blog-card__content">
+                            <div class="blog-card__meta">
+                                <span><i class="fas fa-user"></i> Thu Hà</span>
+                                <span><i class="fas fa-clock"></i> 7 phút đọc</span>
+                            </div>
+                            <h3>7 Bí Quyết Giữ Tóc Giả Luôn Như Mới</h3>
+                            <p>Từ cách vệ sinh đến bảo quản, tất cả đều dễ dàng nếu bạn biết những bí quyết sau.</p>
+                            <a href="#" class="blog-card__link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                    <article class="blog-card">
+                        <div class="blog-card__image">
+                            <img src="https://images.unsplash.com/photo-1503341733017-1901578f9b37?auto=format&fit=crop&w=800&q=80" alt="Câu chuyện khách hàng">
+                            <span class="blog-card__date"><span class="blog-card__day">22</span><span class="blog-card__month">Th1</span></span>
+                        </div>
+                        <div class="blog-card__content">
+                            <div class="blog-card__meta">
+                                <span><i class="fas fa-user"></i> Minh Phúc</span>
+                                <span><i class="fas fa-clock"></i> 4 phút đọc</span>
+                            </div>
+                            <h3>Khách Hàng Hạnh Phúc: Hành Trình Tìm Lại Tự Tin</h3>
+                            <p>Câu chuyện của chị Lan khi tìm được mái tóc phù hợp và lấy lại nụ cười rạng rỡ.</p>
+                            <a href="#" class="blog-card__link">Đọc tiếp <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking Section -->
+        <section id="booking" class="section section--white" aria-labelledby="booking-title">
+            <div class="container">
+                <h2 id="booking-title" class="section__title">Đặt Lịch Tư Vấn</h2>
+                <p class="intro-text">Điền thông tin bên dưới, đội ngũ Quyền Hair sẽ liên hệ trong vòng 30 phút trong giờ hành chính.</p>
+                <form class="booking-form" novalidate>
+                    <div class="form-row">
+                        <label for="booking-name">Họ và tên *</label>
+                        <input id="booking-name" name="name" type="text" placeholder="Nguyễn Thị A" required autocomplete="name">
+                    </div>
+                    <div class="form-row">
+                        <label for="booking-phone">Số điện thoại *</label>
+                        <input id="booking-phone" name="phone" type="tel" placeholder="0966 856 191" required autocomplete="tel">
+                    </div>
+                    <div class="form-row">
+                        <label for="booking-email">Email</label>
+                        <input id="booking-email" name="email" type="email" placeholder="ban@example.com" autocomplete="email">
+                    </div>
+                    <div class="form-row">
+                        <label for="booking-service">Dịch vụ quan tâm *</label>
+                        <select id="booking-service" name="service" required>
+                            <option value="">Chọn dịch vụ</option>
+                            <option value="wig-consulting">Tư vấn tóc giả</option>
+                            <option value="hair-treatment">Chăm sóc & bảo dưỡng</option>
+                            <option value="custom-color">Nhuộm & phối màu</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="booking-date">Ngày hẹn mong muốn</label>
+                        <input id="booking-date" name="date" type="date" min="2024-01-01" max="2026-12-31">
+                    </div>
+                    <div class="form-row form-row--full">
+                        <label for="booking-message">Ghi chú</label>
+                        <textarea id="booking-message" name="message" rows="4" placeholder="Chia sẻ mong muốn của bạn..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--lg">Gửi yêu cầu</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section section--gray" aria-labelledby="contact-title">
+            <div class="container">
+                <h2 id="contact-title" class="section__title">Liên Hệ Với Chúng Tôi</h2>
+                <div class="contact-grid">
+                    <article class="contact-card">
+                        <div class="contact-icon" aria-hidden="true"><i class="fas fa-headset"></i></div>
+                        <h3>Hotline 24/7</h3>
+                        <p>Đặt lịch tư vấn nhanh chóng thông qua hotline hoặc Zalo.</p>
+                        <a href="tel:+84966856191" class="contact-link">+84 966 856 191</a>
+                    </article>
+                    <article class="contact-card">
+                        <div class="contact-icon" aria-hidden="true"><i class="fas fa-envelope-open-text"></i></div>
+                        <h3>Email</h3>
+                        <p>Gửi yêu cầu chi tiết, đội ngũ tư vấn sẽ phản hồi trong giờ hành chính.</p>
+                        <a href="mailto:info@quyenhair.com" class="contact-link">info@quyenhair.com</a>
+                    </article>
+                    <article class="contact-card">
+                        <div class="contact-icon" aria-hidden="true"><i class="fas fa-store"></i></div>
+                        <h3>Showroom</h3>
+                        <p>CC 101B, Khu đô thị Mailand, Sơn Đồng, Hà Nội</p>
+                        <a class="contact-link" href="https://maps.app.goo.gl/7Xb8c9xTKwZ3EcfP9" target="_blank" rel="noopener">Xem bản đồ</a>
+                    </article>
+                    <article class="contact-card">
+                        <div class="contact-icon" aria-hidden="true"><i class="fas fa-calendar-check"></i></div>
+                        <h3>Giờ Làm Việc</h3>
+                        <p>Thứ 2 - Chủ Nhật<br>08:00 - 20:00</p>
+                        <a href="#booking" class="contact-link">Đặt lịch ngay</a>
+                    </article>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section section--gray">
-        <div class="container">
-            <h2 class="section__title">Liên Hệ Với Chúng Tôi</h2>
-            
-            <div class="contact-grid">
-                <article class="contact-card">
-                    <div class="contact-icon" aria-hidden="true">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email</h3>
-                    <p>Gửi email cho chúng tôi để được tư vấn chi tiết về sản phẩm và dịch vụ</p>
-                    <a href="mailto:info@quyenhair.com" class="contact-link">info@quyenhair.com</a>
-                </article>
-
-                <article class="contact-card">
-                    <div class="contact-icon" aria-hidden="true">
-                        <i class="fas fa-phone"></i>
-                    </div>
-                    <h3>Điện Thoại</h3>
-                    <p>Liên hệ trực tiếp qua điện thoại để được hỗ trợ nhanh chóng</p>
-                    <a href="tel:+84966856191" class="contact-link">+84 966 856 191</a>
-                </article>
-
-                <article class="contact-card">
-                    <div class="contact-icon" aria-hidden="true">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>Địa Chỉ Cửa Hàng</h3>
-                    <p>Ghé thăm showroom của chúng tôi để trải nghiệm trực tiếp các sản phẩm</p>
-                    <a href="https://www.google.com/maps/place/Mailand+Hanoi+City/@21.0153441,105.7213964,17z/data=!3m1!4b1!4m6!3m5!1s0x31345370a94a4ac9:0x3392276f1e04e593!8m2!3d21.0153391!4d105.7239767!16s%2Fg%2F11wy0thq28?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" class="contact-link" target="_blank" rel="noopener noreferrer">Xem Bản Đồ</a>
-                </article>
-
-                <article class="contact-card">
-                    <div class="contact-icon" aria-hidden="true">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <h3>Giờ Làm Việc</h3>
-                    <p>Thứ 2 - Chủ Nhật<br>8:00 - 20:00</p>
-                    <a href="tel:+84966856191" class="contact-link">Đặt Lịch Hẹn</a>
-                </article>
-            </div>
-        </div>
-    </section>
-
     <!-- Quick Contact Buttons -->
-    <aside class="quick-contact" aria-label="Quick contact options">
-        <a href="https://wa.me/84966856191" class="quick-contact__btn quick-contact__btn--whatsapp" aria-label="Contact via WhatsApp" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-whatsapp"></i>
+    <aside class="quick-contact" aria-label="Liên hệ nhanh">
+        <a href="https://zalo.me/0966856191" class="quick-contact__btn quick-contact__btn--phone" aria-label="Nhắn Zalo" target="_blank" rel="noopener">
+            <i class="fas fa-comment-dots"></i>
         </a>
-        <a href="tel:+84966856191" class="quick-contact__btn quick-contact__btn--phone" aria-label="Call us">
-            <i class="fas fa-phone"></i>
+        <a href="https://wa.me/84966856191" class="quick-contact__btn quick-contact__btn--whatsapp" aria-label="Liên hệ qua WhatsApp" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i>
         </a>
     </aside>
 
     <!-- Scroll to Top Button -->
-    <button class="scroll-top" aria-label="Scroll to top">
-        <i class="fas fa-arrow-up"></i>
+    <button class="scroll-top" type="button" aria-label="Lên đầu trang">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
 
+    <!-- Search Modal -->
+    <div id="searchModal" class="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-title">
+        <div class="search-modal__content">
+            <button class="search-modal__close" type="button" aria-label="Đóng tìm kiếm">&times;</button>
+            <form class="search-form" role="search">
+                <label for="search-input" id="search-title" class="sr-only">Tìm kiếm sản phẩm và dịch vụ</label>
+                <input id="search-input" type="search" placeholder="Bạn muốn tìm gì?" aria-label="Ô tìm kiếm">
+                <button type="submit" aria-label="Thực hiện tìm kiếm"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container">
-            <p>&copy; 2024 Quyền Hair. All rights reserved. | Thiết kế với ❤️ tại Việt Nam</p>
+            <div class="footer__content">
+                <section class="footer__section">
+                    <h4>Quyền Hair</h4>
+                    <p>Đối tác tin cậy đồng hành cùng vẻ đẹp mái tóc của bạn với giải pháp tóc giả toàn diện.</p>
+                </section>
+                <section class="footer__section">
+                    <h4>Dịch Vụ</h4>
+                    <ul class="footer__links">
+                        <li><a href="#services">Tạo kiểu tóc giả</a></li>
+                        <li><a href="#products">Sản phẩm cao cấp</a></li>
+                        <li><a href="#booking">Đặt lịch tư vấn</a></li>
+                    </ul>
+                </section>
+                <section class="footer__section">
+                    <h4>Liên Hệ</h4>
+                    <ul class="footer__links">
+                        <li><a href="tel:+84966856191">Hotline: +84 966 856 191</a></li>
+                        <li><a href="mailto:info@quyenhair.com">Email: info@quyenhair.com</a></li>
+                        <li><a href="https://maps.app.goo.gl/7Xb8c9xTKwZ3EcfP9" target="_blank" rel="noopener">Địa chỉ: CC 101B Mailand</a></li>
+                    </ul>
+                </section>
+                <section class="footer__section">
+                    <h4>Theo Dõi</h4>
+                    <div class="footer__social">
+                        <a class="footer__social-link" href="https://www.facebook.com" aria-label="Facebook" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                        <a class="footer__social-link" href="https://www.instagram.com" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a class="footer__social-link" href="https://www.youtube.com" aria-label="YouTube" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </section>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2025 Quyền Hair. All rights reserved. | Thiết kế với ❤️ tại Việt Nam</p>
+            </div>
         </div>
     </footer>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+    <script src="script-enhanced.js" defer></script>
+    <script>
+    window.addEventListener('load', function registerServiceWorker() {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(function(error) {
+                console.error('Service Worker registration failed:', error);
+            });
+        }
+    });
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 </html>
