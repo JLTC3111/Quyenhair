@@ -1605,8 +1605,8 @@ button {
    Footer
    ========================================== */
 .footer {
-    background: var(--color-text-primary);
-    color: var(--color-surface);
+    background: #fff8d3;
+    color: var(--color-text-secondary);
     padding: var(--spacing-3xl) 0;
     position: relative;
     overflow: hidden;
@@ -1637,12 +1637,10 @@ button {
 
 .footer__section h4 {
     margin-bottom: var(--spacing-md);
-    color: var(--color-surface);
     font-size: var(--font-size-xl);
 }
 
 .footer__section p {
-    color: rgba(255, 255, 255, 0.8);
     line-height: var(--line-height-relaxed);
     margin-bottom: var(--spacing-md);
 }
@@ -1656,7 +1654,6 @@ button {
 }
 
 .footer__links a {
-    color: rgba(255, 255, 255, 0.8);
     transition: color var(--transition-base);
 }
 
@@ -1716,7 +1713,6 @@ button {
     text-align: center;
     padding-top: var(--spacing-xl);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
 }
 
 .footer__bottom a {

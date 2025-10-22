@@ -3,7 +3,7 @@
  * Provides offline functionality and caching
  */
 
-const CACHE_NAME = 'quyenhair-v3';
+const CACHE_NAME = 'quyenhair-v4';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -20,6 +20,9 @@ const ASSETS_TO_CACHE = [
     '/public/models/8.jpg',
     '/public/models/9.jpg',
     '/public/models/10.jpg',
+    'https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1920&q=80',
+    'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1920&q=80',
+    'https://images.unsplash.com/photo-1521490878867-d9fbc7b14049?auto=format&fit=crop&w=1920&q=80',
     'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
     'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
     'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
