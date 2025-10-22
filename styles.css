@@ -480,7 +480,7 @@ button {
 .hero-slide__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(44, 62, 80, 0.78));
+    background: linear-gradient(135deg, rgba(152, 152, 152, 0.82), rgba(44, 62, 80, 0.78));
 }
 
 .hero-slide__content {
