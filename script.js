@@ -173,72 +173,230 @@ class NavigationHandler {
 // ==========================================
 class GalleryHandler {
     constructor() {
-        this.swiperElement = document.querySelector('.swiper');
-        this.swiper = null;
-        
-        if (this.swiperElement && typeof Swiper !== 'undefined') {
-            this.init();
-        }
+        this.initHeroSwiper();
+        this.initGallerySwiper();
     }
 
-    init() {
+    initHeroSwiper() {
+        const heroElement = document.querySelector('.hero-swiper');
+        if (!heroElement || typeof Swiper === 'undefined') return;
+
         try {
-            this.swiper = new Swiper('.swiper', {
+            new Swiper('.hero-swiper', {
                 slidesPerView: 1,
                 spaceBetween: 0,
                 loop: true,
-                autoplay: {
-                    delay: 4000,
-                    disableOnInteraction: false,
-                    pauseOnMouseEnter: true,
-                },
                 effect: 'fade',
                 fadeEffect: {
                     crossFade: true
                 },
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
                 pagination: {
-                    el: '.swiper-pagination',
+                    el: '.hero-swiper .swiper-pagination',
                     clickable: true,
-                    dynamicBullets: true,
                 },
                 navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
+                    nextEl: '.hero-swiper .swiper-button-next',
+                    prevEl: '.hero-swiper .swiper-button-prev',
                 },
                 keyboard: {
                     enabled: true,
                 },
                 a11y: {
                     enabled: true,
-                    prevSlideMessage: 'Ảnh trước',
-                    nextSlideMessage: 'Ảnh tiếp theo',
-                },
-                lazy: {
-                    loadPrevNext: true,
-                },
-                on: {
-                    slideChange: function() {
-                        const activeSlide = this.slides[this.activeIndex];
-                        if (activeSlide) {
-                            activeSlide.style.animation = 'slideIn 0.6s ease forwards';
-                        }
-                    }
+                    prevSlideMessage: 'Slide trước',
+                    nextSlideMessage: 'Slide tiếp theo',
                 }
             });
-
-            document.addEventListener('visibilitychange', () => {
-                if (document.hidden) {
-                    this.swiper?.autoplay?.stop();
-                } else {
-                    this.swiper?.autoplay?.start();
-                }
-            });
-
         } catch (error) {
-            console.error('Error initializing Swiper:', error);
+            console.error('Error initializing hero Swiper:', error);
+        }
+    }
+
+    initGallerySwiper() {
+        const galleryElement = document.querySelector('.gallery-swiper');
+        if (!galleryElement || typeof Swiper === 'undefined') return;
+
+        try {
+            new Swiper('.gallery-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true,
+                },
+                pagination: {
+                    el: '.gallery-swiper .swiper-pagination',
+                    clickable: true,
+                    dynamicBullets: true,
+                },
+                navigation: {
+                    nextEl: '.gallery-swiper .swiper-button-next',
+                    prevEl: '.gallery-swiper .swiper-button-prev',
+                },
+                keyboard: {
+                    enabled: true,
+                },
+                breakpoints: {
+                    640: {
+                        slidesPerView: 2,
+                    },
+                    768: {
+                        slidesPerView: 3,
+                    },
+                }
+            });
+        } catch (error) {
+            console.error('Error initializing gallery Swiper:', error);
         }
     }
 }
+
+// ==========================================
+// Search Modal Handler
+// ==========================================
+class SearchModalHandler {
+    constructor() {
+        this.searchBtn = document.querySelector('.nav__search-btn');
+        this.searchModal = document.getElementById('searchModal');
+        this.closeBtn = document.querySelector('.search-modal__close');
+        this.searchInput = document.querySelector('.search-form input');
+        
+        if (this.searchBtn && this.searchModal) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.searchBtn.addEventListener('click', () => this.openModal());
+        
+        if (this.closeBtn) {
+            this.closeBtn.addEventListener('click', () => this.closeModal());
+        }
+
+        this.searchModal.addEventListener('click', (e) => {
+            if (e.target === this.searchModal) {
+                this.closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.searchModal.classList.contains('active')) {
+                this.closeModal();
+            }
+        });
+    }
+
+    openModal() {
+        this.searchModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => this.searchInput?.focus(), 100);
+    }
+
+    closeModal() {
+        this.searchModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// ==========================================
+// Form Handler
+// ==========================================
+class FormHandler {
+    constructor() {
+        this.forms = document.querySelectorAll('.booking-form, .contact-form');
+        if (this.forms.length > 0) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.forms.forEach(form => {
+            form.addEventListener('submit', (e) => this.handleSubmit(e, form));
+        });
+    }
+
+    handleSubmit(e, form) {
+        e.preventDefault();
+        
+        if (!this.validateForm(form)) {
+            return false;
+        }
+
+        // Show success message
+        this.showSuccessMessage(form);
+        
+        // Reset form
+        setTimeout(() => form.reset(), 1000);
+    }
+
+    validateForm(form) {
+        const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!input.value.trim()) {
+                this.showError(input, 'Vui lòng điền thông tin này');
+                isValid = false;
+            } else if (input.type === 'email' && !this.validateEmail(input.value)) {
+                this.showError(input, 'Email không hợp lệ');
+                isValid = false;
+            } else if (input.type === 'tel' && !this.validatePhone(input.value)) {
+                this.showError(input, 'Số điện thoại không hợp lệ');
+                isValid = false;
+            } else {
+                this.clearError(input);
+            }
+        });
+
+        return isValid;
+    }
+
+    validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    validatePhone(phone) {
+        const re = /^[0-9]{10,11}$/;
+        return re.test(phone.replace(/\s/g, ''));
+    }
+
+    showError(input, message) {
+        this.clearError(input);
+        
+        input.classList.add('input-error');
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        input.parentElement.appendChild(errorDiv);
+    }
+
+    clearError(input) {
+        input.classList.remove('input-error');
+        const errorDiv = input.parentElement.querySelector('.error-message');
+        if (errorDiv) errorDiv.remove();
+    }
+
+    showSuccessMessage(form) {
+        const successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        successDiv.textContent = 'Cảm ơn bạn! Chúng tôi sẽ liên hệ sớm.';
+        form.prepend(successDiv);
+
+        setTimeout(() => successDiv.remove(), 5000);
+    }
+}
+
+// ==========================================
+// Gallery/Swiper Handler (Legacy support)
+// ==========================================
 
 // ==========================================
 // Scroll to Top Button
@@ -328,6 +486,8 @@ class App {
         try {
             this.components.push(new NavigationHandler());
             this.components.push(new GalleryHandler());
+            this.components.push(new SearchModalHandler());
+            this.components.push(new FormHandler());
             this.components.push(new ScrollToTop());
             this.components.push(new AnimationObserver());
 

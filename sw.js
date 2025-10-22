@@ -3,17 +3,27 @@
  * Provides offline functionality and caching
  */
 
-const CACHE_NAME = 'quyenhair-v1';
+const CACHE_NAME = 'quyenhair-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/styles.css',
     '/script.js',
     '/public/favicon.png',
+    '/public/models/1.jpg',
+    '/public/models/2.jpg',
+    '/public/models/3.jpg',
+    '/public/models/4.jpg',
+    '/public/models/5.jpg',
+    '/public/models/6.jpg',
+    '/public/models/7.jpg',
+    '/public/models/8.jpg',
+    '/public/models/9.jpg',
+    '/public/models/10.jpg',
     'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
     'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css',
     'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
 ];
 
 // Install event - cache assets
