@@ -38,6 +38,67 @@ const throttle = (func, limit = 150) => {
 };
 
 // ==========================================
+// Theme Manager
+// ==========================================
+class ThemeManager {
+    constructor() {
+        this.themeToggle = document.getElementById('themeToggle');
+        this.currentTheme = localStorage.getItem('theme') || 'light';
+        this.init();
+    }
+
+    init() {
+        // Apply saved theme
+        this.applyTheme(this.currentTheme);
+        
+        // Setup toggle button
+        if (this.themeToggle) {
+            this.themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+        
+        // Listen for system theme changes
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                this.applyTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
+    toggleTheme() {
+        const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+        this.applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    }
+
+    applyTheme(theme) {
+        this.currentTheme = theme;
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Update toggle button icon
+        if (this.themeToggle) {
+            const icon = this.themeToggle.querySelector('i');
+            if (icon) {
+                if (theme === 'dark') {
+                    icon.className = 'fas fa-sun';
+                    this.themeToggle.setAttribute('aria-label', 'Chuyển sang chế độ sáng');
+                } else {
+                    icon.className = 'fas fa-moon';
+                    this.themeToggle.setAttribute('aria-label', 'Chuyển sang chế độ tối');
+                }
+            }
+        }
+        
+        // Dispatch custom event for other components
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+    }
+
+    getTheme() {
+        return this.currentTheme;
+    }
+}
+
+// ==========================================
 // Navigation Handler
 // ==========================================
 class NavigationHandler {
@@ -484,6 +545,7 @@ class App {
 
     initializeComponents() {
         try {
+            this.components.push(new ThemeManager());
             this.components.push(new NavigationHandler());
             this.components.push(new GalleryHandler());
             this.components.push(new SearchModalHandler());
