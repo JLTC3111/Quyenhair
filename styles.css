@@ -450,34 +450,11 @@ button {
     align-items: center;
     gap: var(--spacing-sm);
 }
-.nav__link:focus {
-    color: var(--color-primary);
-    transform: translateY(-2px);
-}
-
-.nav__link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--color-primary);
-    transition: all var(--transition-base);
-    transform: translateX(-50%);
-}
-
-.nav__link:hover::after,
-.nav__link:focus::after {
-    width: 80%;
-}
 
 .nav__actions {
     display: flex;
-    padding-bottom: .5rem;
     align-items: center;
     gap: var(--spacing-md);
-    margin-left: auto;
 }
 
 .nav__search-btn {
@@ -486,6 +463,7 @@ button {
     color: var(--color-text-primary);
     font-size: var(--font-size-xl);
     transition: color var(--transition-base);
+    cursor: pointer;
 }
 
 .nav__search-btn:hover,
@@ -2928,7 +2906,7 @@ button {
     width: 55px;
     height: 55px;
     border-radius: var(--border-radius-lg);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    background: linear-gradient(135deg, #4a9eff, #2874c7);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -2939,7 +2917,7 @@ button {
     border: 2px solid rgba(255, 255, 255, 0.3);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 15px rgba(74, 158, 255, 0.4);
 }
 
 .footer__social-link::before {
@@ -2972,10 +2950,26 @@ button {
     transform: translateY(-5px) scale(1.05);
 }
 
+.footer__social-link:nth-child(1) {
+    background: linear-gradient(135deg, #1877f2, #0d5dbf);
+    color: white;
+}
+
+.footer__social-link:nth-child(2) {
+    background: linear-gradient(135deg, #f09433, #e4405f, #bc1888);
+    color: white;
+}
+
+.footer__social-link:nth-child(3) {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+}
+
 /* Individual social icon colors on hover */
 .footer__social-link:nth-child(1):hover {
     border-color: #1877f2;
     box-shadow: 0 15px 40px rgba(24, 119, 242, 0.5);
+    color: white;
 }
 
 .footer__social-link:nth-child(1):hover::before {
@@ -2985,6 +2979,7 @@ button {
 .footer__social-link:nth-child(2):hover {
     border-color: #e4405f;
     box-shadow: 0 15px 40px rgba(228, 64, 95, 0.5);
+    color: white;
 }
 
 .footer__social-link:nth-child(2):hover::before {
@@ -2994,6 +2989,7 @@ button {
 .footer__social-link:nth-child(3):hover {
     border-color: #ff0000;
     box-shadow: 0 15px 40px rgba(255, 0, 0, 0.5);
+    color: white;
 }
 
 .footer__social-link:nth-child(3):hover::before {
@@ -3115,7 +3111,6 @@ button {
 
 .footer__section h4 {
     margin-bottom: var(--spacing-md);
-    color: var(--color-surface);
 }
 
 .footer__links {
@@ -3270,126 +3265,6 @@ button {
 }
 
 /* ==========================================
-   Tablet & Mobile - Hamburger Menu (1024px and below)
-   ========================================== */
-@media (max-width: 1024px) {
-    .nav__toggle {
-        display: flex;
-        order: 1;
-    }
-    
-    .nav__logo {
-        order: 2;
-    }
-    
-    .nav__actions {
-        order: 3;
-    }
-    
-    .nav__menu {
-        position: fixed;
-        top: 0;
-        left: -320px;
-        width: 320px;
-        height: 100vh;
-        background: var(--color-surface);
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        padding: var(--spacing-2xl);
-        padding-top: calc(var(--nav-height) + var(--spacing-2xl));
-        gap: var(--spacing-md);
-        transition: left 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-        box-shadow: var(--shadow-2xl);
-        overflow-y: auto;
-        z-index: 999;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .nav__menu.active {
-        left: 0;
-    }
-    
-    .nav__menu::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: var(--nav-height);
-        background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-        opacity: 0.1;
-    }
-    
-    .nav__item--dropdown {
-        width: 100%;
-    }
-    
-    .nav__link {
-        font-size: var(--font-size-lg);
-        padding: var(--spacing-md) var(--spacing-lg);
-        width: 100%;
-        border-radius: var(--border-radius-md);
-        background: rgba(255, 255, 255, 0.05);
-        margin-bottom: var(--spacing-xs);
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-sm);
-    }
-    
-    .nav__link:hover,
-    .nav__link:focus {
-        background: var(--color-primary);
-        color: white;
-        transform: translateX(5px);
-    }
-    
-    .nav__link::before {
-        content: '→';
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all var(--transition-base);
-    }
-    
-    .nav__link:hover::before,
-    .nav__link:focus::before {
-        opacity: 1;
-        transform: translateX(0);
-    }
-    
-    .nav__link::after {
-        display: none;
-    }
-    
-    .nav__dropdown {
-        position: static;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        box-shadow: none;
-        background: transparent;
-        padding: var(--spacing-sm) 0 var(--spacing-sm) var(--spacing-lg);
-        margin-top: var(--spacing-xs);
-    }
-    
-    .nav__dropdown a {
-        padding: var(--spacing-sm) var(--spacing-lg);
-        font-size: var(--font-size-base);
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: var(--border-radius-sm);
-        margin-bottom: var(--spacing-xs);
-        border-left: 2px solid var(--color-primary);
-    }
-    
-    .nav__dropdown a:hover,
-    .nav__dropdown a:focus {
-        background: var(--color-primary);
-        color: white;
-        transform: translateX(3px);
-    }
-}
-
-/* ==========================================
    Mobile Optimization (768px and below)
    ========================================== */
 @media (max-width: 768px) {
@@ -3433,9 +3308,15 @@ button {
         font-size: var(--font-size-lg);
     }
     
-    /* Additional mobile-specific adjustments */
+    /* Smaller drawer on mobile */
+    .nav__menu {
+        width: 280px;
+        left: -280px;
+    }
+    
+    /* Hide call and booking buttons on small screens */
     .nav__actions .btn {
-        display: none; /* Hide call and booking buttons on small screens */
+        display: none;
     }
     
     /* Hero */

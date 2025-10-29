@@ -124,10 +124,10 @@ class NavigationHandler {
             this.initMobileMenu();
         }
 
+        // Close drawer on resize if needed
         window.addEventListener('resize', debounce(() => {
-            if (window.innerWidth > 1024 && this.navMenu) {
-                this.closeDrawer();
-            }
+            // Optional: You can remove this entirely if you want drawer to persist
+            // Currently keeping it but with no auto-close on desktop
         }, 250));
     }
 
