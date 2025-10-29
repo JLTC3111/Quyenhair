@@ -119,6 +119,13 @@ Server will run on `http://localhost:3000`
 | Method | Endpoint | Description | Auth Required |
 |--------|----------|-------------|---------------|
 | GET | `/api/comments` | Get all comments | No |
+| GET | `/api/comments/stats` | Get review statistics | No |
+| GET | `/api/comments/featured` | Get featured reviews | No |
+| GET | `/api/comments/recent` | Get recent reviews | No |
+| GET | `/api/comments/top-reviewers` | Get top reviewers | No |
+| GET | `/api/comments/verified` | Get verified reviews | No |
+| GET | `/api/comments/by-rating` | Filter by rating | No |
+| GET | `/api/comments/search` | Search reviews | No |
 | GET | `/api/comments/:id` | Get comment by ID | No |
 | POST | `/api/comments` | Create comment | Yes |
 | PUT | `/api/comments/:id` | Update comment | Yes (owner) |
@@ -126,6 +133,8 @@ Server will run on `http://localhost:3000`
 | POST | `/api/comments/:id/helpful` | Mark helpful | No |
 | POST | `/api/comments/:id/reply` | Reply to comment | Yes |
 | GET | `/api/comments/user/my-comments` | Get user's comments | Yes |
+| PATCH | `/api/comments/:id/moderate` | Moderate review | Yes (admin) |
+| GET | `/api/comments/admin/pending` | Get pending reviews | Yes (admin) |
 
 ### Bookings
 
@@ -199,6 +208,62 @@ Content-Type: application/json
     "user_avatar": "https://...",
     "created_at": "2024-01-15T10:30:00.000Z"
   }
+}
+```
+
+### Get Review Statistics
+
+**Request:**
+```bash
+GET /api/comments/stats
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "totalReviews": 1247,
+    "averageRating": 4.8,
+    "ratingBreakdown": {
+      "5": { "count": 935, "percentage": "75.0" },
+      "4": { "count": 249, "percentage": "20.0" },
+      "3": { "count": 63, "percentage": "5.0" },
+      "2": { "count": 0, "percentage": "0.0" },
+      "1": { "count": 0, "percentage": "0.0" }
+    },
+    "totalHelpfulVotes": 3421,
+    "recentTrend": {
+      "last30Days": 47,
+      "recentAverage": "4.9"
+    },
+    "verifiedReviews": 892
+  }
+}
+```
+
+### Get Featured Reviews
+
+**Request:**
+```bash
+GET /api/comments/featured?limit=3
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "id": 42,
+      "rating": 5,
+      "comment": "Amazing service!...",
+      "helpful": 127,
+      "user_name": "Sarah Johnson",
+      "user_verified": true,
+      "created_at": "2024-01-15T10:30:00.000Z"
+    }
+  ]
 }
 ```
 

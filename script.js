@@ -505,6 +505,10 @@ class App {
 // ==========================================
 class CommentsHandler {
     constructor() {
+        // API Configuration - Change to your backend URL
+        this.API_BASE_URL = 'http://localhost:3001/api';
+        this.USE_API = false; // Set to true when backend is running
+        
         this.comments = this.loadComments();
         this.currentFilter = 'all';
         this.commentsPerPage = 5;
@@ -512,13 +516,214 @@ class CommentsHandler {
         this.init();
     }
 
-    init() {
+    async init() {
         this.setupStarRating();
         this.setupCommentForm();
         this.setupFilters();
-        this.renderComments();
-        this.updateStats();
+        
+        // Load data from API or localStorage
+        if (this.USE_API) {
+            await this.loadStatisticsFromAPI();
+            await this.loadFeaturedReviewsFromAPI();
+        } else {
+            this.renderComments();
+            this.updateStats();
+        }
+        
         this.setupLoadMore();
+    }
+
+    // ==========================================
+    // API Methods
+    // ==========================================
+    
+    async loadStatisticsFromAPI() {
+        try {
+            const response = await fetch(`${this.API_BASE_URL}/comments/stats`);
+            const { data } = await response.json();
+            
+            this.displayStatistics(data);
+        } catch (error) {
+            console.error('Error loading statistics:', error);
+            // Fallback to localStorage
+            this.updateStats();
+        }
+    }
+    
+    displayStatistics(stats) {
+        // Update average rating
+        const avgRatingEl = document.getElementById('averageRating');
+        if (avgRatingEl) {
+            avgRatingEl.textContent = stats.averageRating.toFixed(1);
+        }
+        
+        // Update total reviews
+        const totalEl = document.getElementById('totalComments');
+        if (totalEl) {
+            totalEl.textContent = stats.totalReviews.toLocaleString();
+        }
+        
+        // Update insights
+        const recentEl = document.getElementById('recentReviews');
+        if (recentEl) {
+            recentEl.textContent = stats.recentTrend.last30Days;
+        }
+        
+        const verifiedEl = document.getElementById('verifiedCount');
+        if (verifiedEl) {
+            verifiedEl.textContent = stats.verifiedReviews.toLocaleString();
+        }
+        
+        // Update rating breakdown
+        Object.entries(stats.ratingBreakdown).forEach(([rating, data]) => {
+            const barEl = document.querySelector(`.rating-bar[data-rating="${rating}"]`);
+            if (barEl) {
+                const fillEl = barEl.querySelector('.rating-bar__fill');
+                const percentageEl = barEl.querySelector('.rating-bar__percentage');
+                const countEl = barEl.querySelector('.rating-bar__count');
+                
+                if (fillEl) fillEl.style.width = `${data.percentage}%`;
+                if (percentageEl) percentageEl.textContent = `${data.percentage}%`;
+                if (countEl) countEl.textContent = `(${data.count})`;
+            }
+        });
+        
+        // Update stars display
+        const starsEl = document.getElementById('averageStars');
+        if (starsEl) {
+            starsEl.innerHTML = this.renderStars(stats.averageRating);
+        }
+    }
+    
+    async loadFeaturedReviewsFromAPI() {
+        try {
+            const response = await fetch(`${this.API_BASE_URL}/comments/featured?limit=3`);
+            const { data } = await response.json();
+            
+            this.displayFeaturedReviews(data);
+        } catch (error) {
+            console.error('Error loading featured reviews:', error);
+            document.getElementById('featuredReviewsGrid').innerHTML = 
+                '<p style="text-align: center; color: var(--color-text-secondary);">Không thể tải đánh giá nổi bật</p>';
+        }
+    }
+    
+    displayFeaturedReviews(reviews) {
+        const gridEl = document.getElementById('featuredReviewsGrid');
+        if (!gridEl) return;
+        
+        if (reviews.length === 0) {
+            gridEl.innerHTML = '<p style="text-align: center; color: var(--color-text-secondary);">Chưa có đánh giá nổi bật</p>';
+            return;
+        }
+        
+        gridEl.innerHTML = reviews.map(review => `
+            <div class="featured-review-card">
+                <div class="featured-review-header">
+                    <div class="featured-review-avatar">
+                        ${review.user_avatar 
+                            ? `<img src="${review.user_avatar}" alt="${review.user_name}">` 
+                            : review.user_name.charAt(0).toUpperCase()
+                        }
+                    </div>
+                    <div class="featured-review-info">
+                        <h4>${this.escapeHtml(review.user_name)}</h4>
+                        ${review.user_verified 
+                            ? '<div class="featured-review-verified"><i class="fas fa-check-circle"></i> Đã xác minh</div>' 
+                            : ''
+                        }
+                    </div>
+                </div>
+                <div class="featured-review-rating">
+                    ${this.renderStars(review.rating)}
+                </div>
+                <p class="featured-review-text">${this.escapeHtml(review.comment)}</p>
+                <div class="featured-review-footer">
+                    <span class="featured-review-helpful">
+                        <i class="fas fa-thumbs-up"></i> ${review.helpful} người thấy hữu ích
+                    </span>
+                    <span>${this.formatDate(review.created_at)}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    async filterReviewsByRating(rating) {
+        if (!this.USE_API) {
+            // Fallback to localStorage filtering
+            this.currentFilter = rating.toString();
+            this.currentPage = 1;
+            this.renderComments();
+            return;
+        }
+        
+        try {
+            const endpoint = rating === 'all' 
+                ? `${this.API_BASE_URL}/comments?status=approved`
+                : `${this.API_BASE_URL}/comments/by-rating?rating=${rating}`;
+                
+            const response = await fetch(endpoint);
+            const { data } = await response.json();
+            
+            this.displayCommentsList(data);
+        } catch (error) {
+            console.error('Error filtering reviews:', error);
+        }
+    }
+    
+    async filterVerifiedReviews() {
+        if (!this.USE_API) return;
+        
+        try {
+            const response = await fetch(`${this.API_BASE_URL}/comments/verified?page=1&limit=10`);
+            const { data } = await response.json();
+            
+            this.displayCommentsList(data);
+        } catch (error) {
+            console.error('Error loading verified reviews:', error);
+        }
+    }
+    
+    async filterRecentReviews() {
+        if (!this.USE_API) return;
+        
+        try {
+            const response = await fetch(`${this.API_BASE_URL}/comments/recent?limit=10&days=30`);
+            const { data } = await response.json();
+            
+            this.displayCommentsList(data);
+        } catch (error) {
+            console.error('Error loading recent reviews:', error);
+        }
+    }
+    
+    displayCommentsList(comments) {
+        // This would replace the current comments display
+        console.log('Displaying comments:', comments);
+        // TODO: Implement full comments list display
+    }
+    
+    renderStars(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+        
+        return '<i class="fas fa-star"></i>'.repeat(fullStars) +
+               (hasHalfStar ? '<i class="fas fa-star-half-alt"></i>' : '') +
+               '<i class="far fa-star"></i>'.repeat(emptyStars);
+    }
+    
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffTime = Math.abs(now - date);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffDays === 0) return 'Hôm nay';
+        if (diffDays === 1) return 'Hôm qua';
+        if (diffDays < 7) return `${diffDays} ngày trước`;
+        if (diffDays < 30) return `${Math.floor(diffDays / 7)} tuần trước`;
+        return date.toLocaleDateString('vi-VN');
     }
 
     loadComments() {
@@ -707,12 +912,32 @@ class CommentsHandler {
     setupFilters() {
         const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
+            btn.addEventListener('click', async () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                this.currentFilter = btn.dataset.filter;
-                this.currentPage = 1;
-                this.renderComments();
+                
+                const filter = btn.dataset.filter;
+                
+                if (this.USE_API) {
+                    // Use API filtering
+                    if (filter === 'all') {
+                        // Load all comments
+                        this.currentFilter = 'all';
+                        this.currentPage = 1;
+                        this.renderComments();
+                    } else if (filter === 'verified') {
+                        await this.filterVerifiedReviews();
+                    } else if (filter === 'recent') {
+                        await this.filterRecentReviews();
+                    } else if (['1', '2', '3', '4', '5'].includes(filter)) {
+                        await this.filterReviewsByRating(filter);
+                    }
+                } else {
+                    // Use localStorage filtering
+                    this.currentFilter = filter;
+                    this.currentPage = 1;
+                    this.renderComments();
+                }
             });
         });
     }

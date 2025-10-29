@@ -578,8 +578,8 @@
                 <!-- Comment Stats -->
                 <div class="comment-stats">
                     <div class="comment-stats__overall">
-                        <div class="comment-stats__score">4.8</div>
-                        <div class="comment-stats__stars">
+                        <div class="comment-stats__score" id="averageRating">4.8</div>
+                        <div class="comment-stats__stars" id="averageStars">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -587,44 +587,91 @@
                             <i class="fas fa-star"></i>
                         </div>
                         <div class="comment-stats__count">Dựa trên <span id="totalComments">0</span> đánh giá</div>
+                        <div class="comment-stats__insights">
+                            <div class="insight-item">
+                                <i class="fas fa-clock"></i>
+                                <span id="recentReviews">0</span> đánh giá tháng này
+                            </div>
+                            <div class="insight-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span id="verifiedCount">0</span> đánh giá đã xác minh
+                            </div>
+                        </div>
                     </div>
-                    <div class="comment-stats__breakdown">
-                        <div class="rating-bar">
+                    <div class="comment-stats__breakdown" id="ratingBreakdown">
+                        <div class="rating-bar" data-rating="5">
                             <span>5 <i class="fas fa-star"></i></span>
                             <div class="rating-bar__track">
                                 <div class="rating-bar__fill" style="width: 75%"></div>
                             </div>
-                            <span>75%</span>
+                            <span class="rating-bar__percentage">75%</span>
+                            <span class="rating-bar__count">(0)</span>
                         </div>
-                        <div class="rating-bar">
+                        <div class="rating-bar" data-rating="4">
                             <span>4 <i class="fas fa-star"></i></span>
                             <div class="rating-bar__track">
                                 <div class="rating-bar__fill" style="width: 20%"></div>
                             </div>
-                            <span>20%</span>
+                            <span class="rating-bar__percentage">20%</span>
+                            <span class="rating-bar__count">(0)</span>
                         </div>
-                        <div class="rating-bar">
+                        <div class="rating-bar" data-rating="3">
                             <span>3 <i class="fas fa-star"></i></span>
                             <div class="rating-bar__track">
                                 <div class="rating-bar__fill" style="width: 5%"></div>
                             </div>
-                            <span>5%</span>
+                            <span class="rating-bar__percentage">5%</span>
+                            <span class="rating-bar__count">(0)</span>
                         </div>
-                        <div class="rating-bar">
+                        <div class="rating-bar" data-rating="2">
                             <span>2 <i class="fas fa-star"></i></span>
                             <div class="rating-bar__track">
                                 <div class="rating-bar__fill" style="width: 0%"></div>
                             </div>
-                            <span>0%</span>
+                            <span class="rating-bar__percentage">0%</span>
+                            <span class="rating-bar__count">(0)</span>
                         </div>
-                        <div class="rating-bar">
+                        <div class="rating-bar" data-rating="1">
                             <span>1 <i class="fas fa-star"></i></span>
                             <div class="rating-bar__track">
                                 <div class="rating-bar__fill" style="width: 0%"></div>
                             </div>
-                            <span>0%</span>
+                            <span class="rating-bar__percentage">0%</span>
+                            <span class="rating-bar__count">(0)</span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Featured Reviews Section -->
+                <div class="featured-reviews-section" style="margin-top: 3rem; margin-bottom: 3rem;">
+                    <h3 style="text-align: center; margin-bottom: 2rem; color: var(--color-primary);">
+                        <i class="fas fa-award"></i> Đánh giá nổi bật
+                    </h3>
+                    <div class="featured-reviews-grid" id="featuredReviewsGrid">
+                        <!-- Featured reviews will be loaded here -->
+                        <div class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin"></i> Đang tải đánh giá nổi bật...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="comment-filters" style="margin-bottom: 2rem;">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-list"></i> Tất cả
+                    </button>
+                    <button class="filter-btn" data-filter="5">
+                        <i class="fas fa-star"></i> 5 sao
+                    </button>
+                    <button class="filter-btn" data-filter="4">
+                        <i class="fas fa-star"></i> 4 sao
+                    </button>
+                    <button class="filter-btn" data-filter="verified">
+                        <i class="fas fa-check-circle"></i> Đã xác minh
+                    </button>
+                    <button class="filter-btn" data-filter="recent">
+                        <i class="fas fa-clock"></i> Gần đây
+                    </button>
                 </div>
 
                 <!-- Comment Form -->
