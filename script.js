@@ -490,11 +490,839 @@ class App {
             this.components.push(new FormHandler());
             this.components.push(new ScrollToTop());
             this.components.push(new AnimationObserver());
+            this.components.push(new AuthHandler());
+            this.components.push(new CommentsHandler());
 
             console.log('✓ Application initialized successfully');
         } catch (error) {
             console.error('Error initializing application:', error);
         }
+    }
+}
+
+// ==========================================
+// Comments Handler
+// ==========================================
+class CommentsHandler {
+    constructor() {
+        this.comments = this.loadComments();
+        this.currentFilter = 'all';
+        this.commentsPerPage = 5;
+        this.currentPage = 1;
+        this.init();
+    }
+
+    init() {
+        this.setupStarRating();
+        this.setupCommentForm();
+        this.setupFilters();
+        this.renderComments();
+        this.updateStats();
+        this.setupLoadMore();
+    }
+
+    loadComments() {
+        const stored = localStorage.getItem('quyenhair_comments');
+        if (stored) {
+            return JSON.parse(stored);
+        }
+        // Default sample comments
+        return [
+            {
+                id: Date.now() + 1,
+                name: 'Hương Giang',
+                email: '',
+                rating: 5,
+                comment: 'Mình rất hài lòng với dịch vụ tại Quyền Hair. Tóc giả chất lượng cao, tạo kiểu đúng ý mình. Stylist rất tận tâm và chuyên nghiệp.',
+                date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+                verified: true,
+                helpful: 15,
+                replies: []
+            },
+            {
+                id: Date.now() + 2,
+                name: 'Minh Anh',
+                email: '',
+                rating: 5,
+                comment: 'Đội ngũ stylist rất giỏi, tư vấn kỹ lưỡng. Tóc giả mềm mại, tự nhiên như tóc thật. Showroom đẹp, sạch sẽ. Highly recommended!',
+                date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                verified: true,
+                helpful: 23,
+                replies: [
+                    {
+                        id: Date.now() + 20,
+                        name: 'Quyền Hair',
+                        comment: 'Cảm ơn chị Minh Anh đã tin tưởng! Chúng mình luôn cố gắng mang đến trải nghiệm tốt nhất ạ 💕',
+                        date: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
+                        isAdmin: true
+                    }
+                ]
+            },
+            {
+                id: Date.now() + 3,
+                name: 'Thu Hà',
+                email: '',
+                rating: 4,
+                comment: 'Tóc đẹp, giá cả hợp lý. Chỉ tiếc là thời gian chờ hơi lâu vì đông khách. Nhưng nhìn chung vẫn rất ok!',
+                date: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+                verified: false,
+                helpful: 8,
+                replies: []
+            }
+        ];
+    }
+
+    saveComments() {
+        localStorage.setItem('quyenhair_comments', JSON.stringify(this.comments));
+    }
+
+    setupStarRating() {
+        const starRating = document.querySelector('.star-rating');
+        if (!starRating) return;
+
+        const stars = starRating.querySelectorAll('i');
+        const ratingInput = document.getElementById('commentRating');
+
+        stars.forEach((star, index) => {
+            star.addEventListener('click', () => {
+                const value = index + 1;
+                ratingInput.value = value;
+                starRating.dataset.rating = value;
+                
+                stars.forEach((s, i) => {
+                    if (i < value) {
+                        s.classList.remove('far');
+                        s.classList.add('fas', 'active');
+                    } else {
+                        s.classList.remove('fas', 'active');
+                        s.classList.add('far');
+                    }
+                });
+            });
+
+            star.addEventListener('mouseenter', () => {
+                const value = index + 1;
+                stars.forEach((s, i) => {
+                    if (i < value) {
+                        s.classList.remove('far');
+                        s.classList.add('fas');
+                    } else {
+                        s.classList.remove('fas');
+                        s.classList.add('far');
+                    }
+                });
+            });
+        });
+
+        starRating.addEventListener('mouseleave', () => {
+            const currentRating = parseInt(starRating.dataset.rating) || 0;
+            stars.forEach((s, i) => {
+                if (i < currentRating) {
+                    s.classList.remove('far');
+                    s.classList.add('fas', 'active');
+                } else {
+                    s.classList.remove('fas', 'active');
+                    s.classList.add('far');
+                }
+            });
+        });
+    }
+
+    setupCommentForm() {
+        const form = document.getElementById('commentForm');
+        if (!form) return;
+
+        // Auto-fill form if user is logged in
+        window.addEventListener('userLoggedIn', (e) => {
+            this.prefillCommentForm(e.detail);
+        });
+
+        // Check if user is already logged in
+        const userData = localStorage.getItem('quyenhair_user') || sessionStorage.getItem('quyenhair_user');
+        if (userData) {
+            try {
+                const user = JSON.parse(userData);
+                this.prefillCommentForm(user);
+            } catch (e) {
+                console.error('Failed to parse user data:', e);
+            }
+        }
+
+        // Clear form on logout
+        window.addEventListener('userLoggedOut', () => {
+            document.getElementById('commentName').value = '';
+            document.getElementById('commentEmail').value = '';
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('commentName').value.trim();
+            const email = document.getElementById('commentEmail').value.trim();
+            const rating = parseInt(document.getElementById('commentRating').value);
+            const comment = document.getElementById('commentText').value.trim();
+
+            if (!name || !rating || !comment) {
+                alert('Vui lòng điền đầy đủ thông tin bắt buộc!');
+                return;
+            }
+
+            const newComment = {
+                id: Date.now(),
+                name,
+                email,
+                rating,
+                comment,
+                date: new Date().toISOString(),
+                verified: false,
+                helpful: 0,
+                replies: []
+            };
+
+            this.comments.unshift(newComment);
+            this.saveComments();
+            this.renderComments();
+            this.updateStats();
+            
+            form.reset();
+            document.querySelector('.star-rating').dataset.rating = 0;
+            document.querySelectorAll('.star-rating i').forEach(s => {
+                s.classList.remove('fas', 'active');
+                s.classList.add('far');
+            });
+
+            // Scroll to new comment
+            setTimeout(() => {
+                const firstComment = document.querySelector('.comment-item');
+                if (firstComment) {
+                    firstComment.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstComment.style.animation = 'pulse 0.5s ease';
+                }
+            }, 100);
+
+            alert('Cảm ơn bạn đã để lại đánh giá! 🎉');
+        });
+    }
+
+    setupFilters() {
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.currentFilter = btn.dataset.filter;
+                this.currentPage = 1;
+                this.renderComments();
+            });
+        });
+    }
+
+    setupLoadMore() {
+        const loadMoreBtn = document.getElementById('loadMoreComments');
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                this.currentPage++;
+                this.renderComments(true);
+            });
+        }
+    }
+
+    filterComments() {
+        switch (this.currentFilter) {
+            case 'all':
+                return this.comments;
+            case 'positive':
+                return this.comments.filter(c => c.rating >= 4);
+            case '5':
+            case '4':
+            case '3':
+                return this.comments.filter(c => c.rating === parseInt(this.currentFilter));
+            default:
+                return this.comments;
+        }
+    }
+
+    renderComments(append = false) {
+        const commentsList = document.getElementById('commentsList');
+        if (!commentsList) return;
+
+        const filtered = this.filterComments();
+        const startIndex = append ? (this.currentPage - 1) * this.commentsPerPage : 0;
+        const endIndex = this.currentPage * this.commentsPerPage;
+        const toDisplay = filtered.slice(startIndex, endIndex);
+
+        if (!append) {
+            commentsList.innerHTML = '';
+        }
+
+        if (toDisplay.length === 0 && !append) {
+            commentsList.innerHTML = '<p style="text-align: center; color: var(--color-text-secondary); padding: var(--spacing-2xl);">Chưa có đánh giá nào phù hợp với bộ lọc này.</p>';
+            this.hideLoadMore();
+            return;
+        }
+
+        toDisplay.forEach(comment => {
+            const commentEl = this.createCommentElement(comment);
+            commentsList.appendChild(commentEl);
+        });
+
+        // Show/hide load more button
+        if (endIndex >= filtered.length) {
+            this.hideLoadMore();
+        } else {
+            this.showLoadMore();
+        }
+    }
+
+    createCommentElement(comment) {
+        const div = document.createElement('div');
+        div.className = 'comment-item';
+        div.dataset.id = comment.id;
+
+        const initials = comment.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+        const date = new Date(comment.date).toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        const stars = '★'.repeat(comment.rating) + '☆'.repeat(5 - comment.rating);
+        const verifiedBadge = comment.verified ? '<span class="comment-verified"><i class="fas fa-check-circle"></i> Đã xác minh</span>' : '';
+
+        div.innerHTML = `
+            <div class="comment-header">
+                <div class="comment-author">
+                    <div class="comment-avatar">${initials}</div>
+                    <div class="comment-author-info">
+                        <h4>${this.escapeHtml(comment.name)}${verifiedBadge}</h4>
+                        <div class="comment-date">${date}</div>
+                    </div>
+                </div>
+                <div class="comment-rating">${stars}</div>
+            </div>
+            <div class="comment-body">${this.escapeHtml(comment.comment)}</div>
+            <div class="comment-actions">
+                <button class="comment-action-btn helpful-btn" data-id="${comment.id}">
+                    <i class="far fa-thumbs-up"></i>
+                    Hữu ích (${comment.helpful})
+                </button>
+                <button class="comment-action-btn reply-btn" data-id="${comment.id}">
+                    <i class="far fa-comment"></i>
+                    Trả lời
+                </button>
+            </div>
+            ${comment.replies.length > 0 ? this.renderReplies(comment.replies) : ''}
+            <div class="reply-form" style="display: none;" data-comment-id="${comment.id}">
+                <textarea placeholder="Viết câu trả lời của bạn..."></textarea>
+                <div class="reply-form-actions">
+                    <button class="btn btn--primary btn--sm submit-reply">Gửi</button>
+                    <button class="btn btn--outline btn--sm cancel-reply">Hủy</button>
+                </div>
+            </div>
+        `;
+
+        // Setup event listeners
+        this.setupCommentActions(div, comment);
+
+        return div;
+    }
+
+    renderReplies(replies) {
+        if (replies.length === 0) return '';
+
+        const repliesHtml = replies.map(reply => {
+            const initials = reply.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+            const date = new Date(reply.date).toLocaleDateString('vi-VN', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            const adminBadge = reply.isAdmin ? '<span class="comment-verified"><i class="fas fa-badge-check"></i> Quản trị viên</span>' : '';
+
+            return `
+                <div class="reply-item">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <div class="comment-avatar" style="width: 35px; height: 35px; font-size: 0.875rem;">${initials}</div>
+                            <div class="comment-author-info">
+                                <h4 style="font-size: 1rem;">${this.escapeHtml(reply.name)}${adminBadge}</h4>
+                                <div class="comment-date">${date}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-body" style="margin-top: var(--spacing-sm);">${this.escapeHtml(reply.comment)}</div>
+                </div>
+            `;
+        }).join('');
+
+        return `<div class="comment-replies">${repliesHtml}</div>`;
+    }
+
+    setupCommentActions(commentEl, comment) {
+        // Helpful button
+        const helpfulBtn = commentEl.querySelector('.helpful-btn');
+        helpfulBtn.addEventListener('click', () => {
+            const commentId = parseInt(helpfulBtn.dataset.id);
+            const commentData = this.comments.find(c => c.id === commentId);
+            if (commentData) {
+                commentData.helpful++;
+                this.saveComments();
+                helpfulBtn.innerHTML = `<i class="fas fa-thumbs-up"></i> Hữu ích (${commentData.helpful})`;
+                helpfulBtn.style.color = 'var(--color-primary)';
+                helpfulBtn.disabled = true;
+            }
+        });
+
+        // Reply button
+        const replyBtn = commentEl.querySelector('.reply-btn');
+        const replyForm = commentEl.querySelector('.reply-form');
+        
+        replyBtn.addEventListener('click', () => {
+            replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Cancel reply
+        const cancelBtn = commentEl.querySelector('.cancel-reply');
+        cancelBtn.addEventListener('click', () => {
+            replyForm.style.display = 'none';
+            replyForm.querySelector('textarea').value = '';
+        });
+
+        // Submit reply
+        const submitBtn = commentEl.querySelector('.submit-reply');
+        submitBtn.addEventListener('click', () => {
+            const replyText = replyForm.querySelector('textarea').value.trim();
+            if (!replyText) {
+                alert('Vui lòng nhập nội dung trả lời!');
+                return;
+            }
+
+            const reply = {
+                id: Date.now(),
+                name: 'Bạn',
+                comment: replyText,
+                date: new Date().toISOString(),
+                isAdmin: false
+            };
+
+            comment.replies.push(reply);
+            this.saveComments();
+            this.renderComments();
+            alert('Đã gửi câu trả lời!');
+        });
+    }
+
+    updateStats() {
+        const totalEl = document.getElementById('totalComments');
+        if (totalEl) {
+            totalEl.textContent = this.comments.length;
+        }
+    }
+
+    prefillCommentForm(userData) {
+        const nameInput = document.getElementById('commentName');
+        const emailInput = document.getElementById('commentEmail');
+        
+        if (nameInput && userData.name) {
+            nameInput.value = userData.name;
+        }
+        
+        if (emailInput && userData.email) {
+            emailInput.value = userData.email;
+        }
+    }
+
+    showLoadMore() {
+        const loadMoreSection = document.querySelector('.comments-load-more');
+        if (loadMoreSection) {
+            loadMoreSection.style.display = 'block';
+        }
+    }
+
+    hideLoadMore() {
+        const loadMoreSection = document.querySelector('.comments-load-more');
+        if (loadMoreSection) {
+            loadMoreSection.style.display = 'none';
+        }
+    }
+
+    escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+}
+
+// ==========================================
+// Authentication Handler
+// ==========================================
+class AuthHandler {
+    constructor() {
+        this.authModal = document.getElementById('authModal');
+        this.userBtn = document.getElementById('userBtn');
+        this.userDropdown = document.getElementById('userDropdown');
+        this.loginTab = document.querySelector('[data-tab="login"]');
+        this.registerTab = document.querySelector('[data-tab="register"]');
+        this.loginForm = document.getElementById('loginForm');
+        this.registerForm = document.getElementById('registerForm');
+        this.emailLoginForm = document.getElementById('emailLoginForm');
+        this.emailRegisterForm = document.getElementById('emailRegisterForm');
+        this.logoutBtn = document.getElementById('logoutBtn');
+        this.currentUser = null;
+
+        // OAuth configuration (demo - requires backend implementation)
+        this.oauthConfig = {
+            google: {
+                clientId: 'YOUR_GOOGLE_CLIENT_ID',
+                redirectUri: window.location.origin + '/auth/google/callback',
+                scope: 'profile email'
+            },
+            facebook: {
+                appId: 'YOUR_FACEBOOK_APP_ID',
+                redirectUri: window.location.origin + '/auth/facebook/callback',
+                scope: 'email,public_profile'
+            },
+            instagram: {
+                clientId: 'YOUR_INSTAGRAM_CLIENT_ID',
+                redirectUri: window.location.origin + '/auth/instagram/callback',
+                scope: 'user_profile,user_media'
+            }
+        };
+
+        this.init();
+    }
+
+    init() {
+        if (!this.authModal || !this.userBtn) return;
+
+        // Load user session
+        this.loadUserSession();
+
+        // Setup event listeners
+        this.setupModalEvents();
+        this.setupTabSwitching();
+        this.setupSocialLogin();
+        this.setupEmailLogin();
+        this.setupEmailRegister();
+        this.setupUserDropdown();
+        this.setupLogout();
+    }
+
+    setupModalEvents() {
+        // Open modal
+        this.userBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (this.currentUser) {
+                this.userDropdown.classList.toggle('active');
+            } else {
+                this.openModal();
+            }
+        });
+
+        // Close modal
+        const closeBtn = this.authModal.querySelector('.auth-modal__close');
+        closeBtn.addEventListener('click', () => this.closeModal());
+
+        this.authModal.addEventListener('click', (e) => {
+            if (e.target === this.authModal) {
+                this.closeModal();
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!this.userDropdown.contains(e.target) && e.target !== this.userBtn) {
+                this.userDropdown.classList.remove('active');
+            }
+        });
+    }
+
+    setupTabSwitching() {
+        this.loginTab.addEventListener('click', () => {
+            this.switchTab('login');
+        });
+
+        this.registerTab.addEventListener('click', () => {
+            this.switchTab('register');
+        });
+    }
+
+    switchTab(tab) {
+        // Update active tab
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+        // Show corresponding form
+        document.querySelectorAll('.auth-form-container').forEach(f => f.classList.remove('active'));
+        document.getElementById(tab + 'Form').classList.add('active');
+    }
+
+    setupSocialLogin() {
+        const socialBtns = document.querySelectorAll('.social-btn');
+        
+        socialBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const provider = btn.dataset.provider;
+                this.handleSocialLogin(provider);
+            });
+        });
+    }
+
+    handleSocialLogin(provider) {
+        console.log(`Initiating ${provider} login...`);
+
+        // Show loading state
+        const btn = document.querySelector(`.social-btn[data-provider="${provider}"]`);
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Đang kết nối...</span>';
+        btn.disabled = true;
+
+        // Simulate OAuth flow (in production, this would redirect to OAuth provider)
+        setTimeout(() => {
+            // Demo: Create mock user data
+            const mockUserData = {
+                id: Date.now(),
+                name: provider === 'google' ? 'Nguyễn Văn A' : 
+                      provider === 'facebook' ? 'Trần Thị B' : 'Lê Văn C',
+                email: `user@${provider}.com`,
+                provider: provider,
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(provider === 'google' ? 'Nguyen Van A' : provider === 'facebook' ? 'Tran Thi B' : 'Le Van C')}&background=2874c7&color=fff`,
+                verified: true
+            };
+
+            this.loginUser(mockUserData);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 1500);
+
+        // Production implementation would be:
+        // window.location.href = this.getOAuthUrl(provider);
+    }
+
+    getOAuthUrl(provider) {
+        const config = this.oauthConfig[provider];
+        
+        switch(provider) {
+            case 'google':
+                return `https://accounts.google.com/o/oauth2/v2/auth?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&response_type=code&scope=${config.scope}`;
+            
+            case 'facebook':
+                return `https://www.facebook.com/v12.0/dialog/oauth?client_id=${config.appId}&redirect_uri=${config.redirectUri}&scope=${config.scope}`;
+            
+            case 'instagram':
+                return `https://api.instagram.com/oauth/authorize?client_id=${config.clientId}&redirect_uri=${config.redirectUri}&scope=${config.scope}&response_type=code`;
+            
+            default:
+                console.error('Unknown provider:', provider);
+                return null;
+        }
+    }
+
+    setupEmailLogin() {
+        this.emailLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(this.emailLoginForm);
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const remember = formData.get('remember');
+
+            // Validate
+            if (!email || !password) {
+                alert('Vui lòng nhập đầy đủ thông tin!');
+                return;
+            }
+
+            // Demo: Simulate login (in production, this would call backend API)
+            const submitBtn = this.emailLoginForm.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng nhập...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                const userData = {
+                    id: Date.now(),
+                    name: email.split('@')[0],
+                    email: email,
+                    provider: 'email',
+                    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(email.split('@')[0])}&background=2874c7&color=fff`,
+                    verified: false
+                };
+
+                this.loginUser(userData, remember);
+                submitBtn.innerHTML = 'Đăng nhập';
+                submitBtn.disabled = false;
+                this.emailLoginForm.reset();
+            }, 1000);
+
+            // Production implementation:
+            // fetch('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) })
+        });
+    }
+
+    setupEmailRegister() {
+        this.emailRegisterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(this.emailRegisterForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirmPassword');
+            const terms = formData.get('terms');
+
+            // Validate
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Vui lòng nhập đầy đủ thông tin!');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Mật khẩu xác nhận không khớp!');
+                return;
+            }
+
+            if (password.length < 8) {
+                alert('Mật khẩu phải có ít nhất 8 ký tự!');
+                return;
+            }
+
+            if (!terms) {
+                alert('Vui lòng đồng ý với điều khoản sử dụng!');
+                return;
+            }
+
+            // Demo: Simulate registration
+            const submitBtn = this.emailRegisterForm.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang đăng ký...';
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                const userData = {
+                    id: Date.now(),
+                    name: name,
+                    email: email,
+                    provider: 'email',
+                    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=2874c7&color=fff`,
+                    verified: false
+                };
+
+                this.loginUser(userData, true);
+                submitBtn.innerHTML = 'Đăng ký';
+                submitBtn.disabled = false;
+                this.emailRegisterForm.reset();
+                alert('Đăng ký thành công! Chào mừng bạn đến với Quyền Hair.');
+            }, 1000);
+
+            // Production: fetch('/api/auth/register', { method: 'POST', body: JSON.stringify({ name, email, password }) })
+        });
+    }
+
+    setupUserDropdown() {
+        const dropdownLinks = this.userDropdown.querySelectorAll('a:not(#logoutBtn)');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                this.userDropdown.classList.remove('active');
+            });
+        });
+    }
+
+    setupLogout() {
+        this.logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.logoutUser();
+        });
+    }
+
+    loginUser(userData, rememberMe = false) {
+        this.currentUser = userData;
+        
+        // Save to storage
+        if (rememberMe) {
+            localStorage.setItem('quyenhair_user', JSON.stringify(userData));
+        } else {
+            sessionStorage.setItem('quyenhair_user', JSON.stringify(userData));
+        }
+
+        // Update UI
+        this.updateUserUI();
+        this.closeModal();
+
+        // Dispatch custom event for other components
+        window.dispatchEvent(new CustomEvent('userLoggedIn', { detail: userData }));
+    }
+
+    logoutUser() {
+        this.currentUser = null;
+        localStorage.removeItem('quyenhair_user');
+        sessionStorage.removeItem('quyenhair_user');
+        
+        this.updateUserUI();
+        this.userDropdown.classList.remove('active');
+
+        // Dispatch custom event
+        window.dispatchEvent(new Event('userLoggedOut'));
+    }
+
+    loadUserSession() {
+        const userData = localStorage.getItem('quyenhair_user') || sessionStorage.getItem('quyenhair_user');
+        
+        if (userData) {
+            try {
+                this.currentUser = JSON.parse(userData);
+                this.updateUserUI();
+            } catch (e) {
+                console.error('Failed to parse user data:', e);
+            }
+        }
+    }
+
+    updateUserUI() {
+        if (this.currentUser) {
+            // Update button
+            this.userBtn.classList.add('logged-in');
+            this.userBtn.setAttribute('aria-label', this.currentUser.name);
+
+            // Update dropdown
+            const avatar = this.userDropdown.querySelector('.user-dropdown__avatar');
+            const nameEl = this.userDropdown.querySelector('.user-dropdown__name');
+            const emailEl = this.userDropdown.querySelector('.user-dropdown__email');
+
+            const initials = this.currentUser.name.split(' ').map(n => n[0]).join('').substring(0, 2);
+            avatar.textContent = initials;
+            nameEl.textContent = this.currentUser.name;
+            emailEl.textContent = this.currentUser.email;
+
+            // Show verified badge if applicable
+            if (this.currentUser.verified && !nameEl.querySelector('.fa-check-circle')) {
+                nameEl.innerHTML += ' <i class="fas fa-check-circle" style="color: var(--color-primary); font-size: 0.875rem;"></i>';
+            }
+        } else {
+            // Reset to default
+            this.userBtn.classList.remove('logged-in');
+            this.userBtn.setAttribute('aria-label', 'Đăng nhập');
+
+            const avatar = this.userDropdown.querySelector('.user-dropdown__avatar');
+            const nameEl = this.userDropdown.querySelector('.user-dropdown__name');
+            const emailEl = this.userDropdown.querySelector('.user-dropdown__email');
+
+            avatar.textContent = '';
+            nameEl.textContent = 'Khách';
+            emailEl.textContent = '';
+        }
+    }
+
+    openModal() {
+        this.authModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    closeModal() {
+        this.authModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    getCurrentUser() {
+        return this.currentUser;
     }
 }
 

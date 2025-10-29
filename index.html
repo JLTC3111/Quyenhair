@@ -149,6 +149,7 @@
                 </li>
                 <li><a href="#about" class="nav__link">Về chúng tôi</a></li>
                 <li><a href="#gallery" class="nav__link">Thư viện</a></li>
+                <li><a href="#comments" class="nav__link">Đánh giá</a></li>
                 <li><a href="#blog" class="nav__link">Chia sẻ</a></li>
                 <li><a href="#contact" class="nav__link">Liên hệ</a></li>
             </ul>
@@ -156,6 +157,9 @@
             <div class="nav__actions">
                 <button class="nav__search-btn" type="button" aria-label="Mở tìm kiếm">
                     <i class="fas fa-search"></i>
+                </button>
+                <button class="nav__user-btn" id="userBtn" type="button" aria-label="Đăng nhập">
+                    <i class="fas fa-user"></i>
                 </button>
                 <a class="btn btn--outline btn--sm" href="tel:+84966856191">
                     <i class="fas fa-phone"></i>
@@ -165,6 +169,22 @@
                     <i class="fas fa-calendar-check"></i>
                     Đặt lịch
                 </a>
+            </div>
+            
+            <!-- User Dropdown Menu -->
+            <div class="user-dropdown" id="userDropdown">
+                <div class="user-dropdown__profile">
+                    <div class="user-dropdown__avatar"></div>
+                    <div class="user-dropdown__info">
+                        <div class="user-dropdown__name">Khách</div>
+                        <div class="user-dropdown__email"></div>
+                    </div>
+                </div>
+                <ul class="user-dropdown__menu">
+                    <li><a href="#comments"><i class="fas fa-comment"></i> Đánh giá của tôi</a></li>
+                    <li><a href="#booking"><i class="fas fa-calendar"></i> Lịch hẹn</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -180,6 +200,111 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalLabel">
+        <div class="auth-modal__content">
+            <button class="auth-modal__close" type="button" aria-label="Đóng đăng nhập">&times;</button>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Đăng nhập</button>
+                <button class="auth-tab" data-tab="register">Đăng ký</button>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form-container active" id="loginForm">
+                <h2 id="authModalLabel">Đăng nhập</h2>
+                <p class="auth-subtitle">Đăng nhập để trải nghiệm đầy đủ tính năng</p>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn social-btn--google" data-provider="google">
+                        <i class="fab fa-google"></i>
+                        <span>Đăng nhập với Google</span>
+                    </button>
+                    <button type="button" class="social-btn social-btn--facebook" data-provider="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Đăng nhập với Facebook</span>
+                    </button>
+                    <button type="button" class="social-btn social-btn--instagram" data-provider="instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Đăng nhập với Instagram</span>
+                    </button>
+                </div>
+
+                <div class="auth-divider">
+                    <span>Hoặc</span>
+                </div>
+
+                <form class="auth-form" id="emailLoginForm" novalidate>
+                    <label>
+                        <span>Email</span>
+                        <input type="email" name="email" placeholder="email@example.com" required>
+                    </label>
+                    <label>
+                        <span>Mật khẩu</span>
+                        <input type="password" name="password" placeholder="••••••••" required>
+                    </label>
+                    <div class="auth-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="remember">
+                            <span>Ghi nhớ đăng nhập</span>
+                        </label>
+                        <a href="#" class="auth-link">Quên mật khẩu?</a>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--lg btn--full">Đăng nhập</button>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div class="auth-form-container" id="registerForm">
+                <h2>Đăng ký tài khoản</h2>
+                <p class="auth-subtitle">Tạo tài khoản để lưu trữ đánh giá và đặt lịch nhanh hơn</p>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn social-btn--google" data-provider="google">
+                        <i class="fab fa-google"></i>
+                        <span>Đăng ký với Google</span>
+                    </button>
+                    <button type="button" class="social-btn social-btn--facebook" data-provider="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Đăng ký với Facebook</span>
+                    </button>
+                    <button type="button" class="social-btn social-btn--instagram" data-provider="instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Đăng ký với Instagram</span>
+                    </button>
+                </div>
+
+                <div class="auth-divider">
+                    <span>Hoặc</span>
+                </div>
+
+                <form class="auth-form" id="emailRegisterForm" novalidate>
+                    <label>
+                        <span>Họ và tên</span>
+                        <input type="text" name="name" placeholder="Nguyễn Văn A" required>
+                    </label>
+                    <label>
+                        <span>Email</span>
+                        <input type="email" name="email" placeholder="email@example.com" required>
+                    </label>
+                    <label>
+                        <span>Mật khẩu</span>
+                        <input type="password" name="password" placeholder="Tối thiểu 8 ký tự" required minlength="8">
+                    </label>
+                    <label>
+                        <span>Xác nhận mật khẩu</span>
+                        <input type="password" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="terms" required>
+                        <span>Tôi đồng ý với <a href="#" class="auth-link">Điều khoản sử dụng</a></span>
+                    </label>
+                    <button type="submit" class="btn btn--primary btn--lg btn--full">Đăng ký</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -400,6 +525,7 @@
         </section>
 
         <!-- Testimonials Section -->
+                <!-- Testimonials Section -->
         <section id="reviews" class="section section--white">
             <div class="container">
                 <header class="section__header">
@@ -411,7 +537,7 @@
                         <div class="testimonial-card__rating" aria-label="Đánh giá 5 trên 5">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
-                        <p>“Tóc giả mềm và thật đến bất ngờ. Stylist hỗ trợ phối đồ và tạo kiểu tận tình.”</p>
+                        <p>"Tóc giả mềm và thật đến bất ngờ. Stylist hỗ trợ phối đồ và tạo kiểu tận tình."</p>
                         <footer>
                             <strong>Lan Anh</strong>
                             <span>Doanh nhân</span>
@@ -421,7 +547,7 @@
                         <div class="testimonial-card__rating" aria-label="Đánh giá 5 trên 5">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
-                        <p>“Đây là nơi duy nhất mình cảm thấy tự tin khi thử tóc giả. Đội ngũ chuyên nghiệp và thân thiện.”</p>
+                        <p>"Đây là nơi duy nhất mình cảm thấy tự tin khi thử tóc giả. Đội ngũ chuyên nghiệp và thân thiện."</p>
                         <footer>
                             <strong>Thuỳ Dương</strong>
                             <span>MC truyền hình</span>
@@ -431,12 +557,132 @@
                         <div class="testimonial-card__rating" aria-label="Đánh giá 4.5 trên 5">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
                         </div>
-                        <p>“Đặt lịch nhanh chóng, được thử nhiều mẫu và nhận sản phẩm chỉ sau một ngày.”</p>
+                        <p>"Đặt lịch nhanh chóng, được thử nhiều mẫu và nhận sản phẩm chỉ sau một ngày."</p>
                         <footer>
                             <strong>Minh Trang</strong>
                             <span>Nhân viên PR</span>
                         </footer>
                     </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comments Section -->
+        <section id="comments" class="section section--gray">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title">Chia sẻ trải nghiệm</h2>
+                    <p class="section__subtitle">Để lại đánh giá và góp ý của bạn về Quyền Hair.</p>
+                </header>
+
+                <!-- Comment Stats -->
+                <div class="comment-stats">
+                    <div class="comment-stats__overall">
+                        <div class="comment-stats__score">4.8</div>
+                        <div class="comment-stats__stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="comment-stats__count">Dựa trên <span id="totalComments">0</span> đánh giá</div>
+                    </div>
+                    <div class="comment-stats__breakdown">
+                        <div class="rating-bar">
+                            <span>5 <i class="fas fa-star"></i></span>
+                            <div class="rating-bar__track">
+                                <div class="rating-bar__fill" style="width: 75%"></div>
+                            </div>
+                            <span>75%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>4 <i class="fas fa-star"></i></span>
+                            <div class="rating-bar__track">
+                                <div class="rating-bar__fill" style="width: 20%"></div>
+                            </div>
+                            <span>20%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>3 <i class="fas fa-star"></i></span>
+                            <div class="rating-bar__track">
+                                <div class="rating-bar__fill" style="width: 5%"></div>
+                            </div>
+                            <span>5%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>2 <i class="fas fa-star"></i></span>
+                            <div class="rating-bar__track">
+                                <div class="rating-bar__fill" style="width: 0%"></div>
+                            </div>
+                            <span>0%</span>
+                        </div>
+                        <div class="rating-bar">
+                            <span>1 <i class="fas fa-star"></i></span>
+                            <div class="rating-bar__track">
+                                <div class="rating-bar__fill" style="width: 0%"></div>
+                            </div>
+                            <span>0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment Form -->
+                <div class="comment-form-wrapper">
+                    <h3>Viết đánh giá của bạn</h3>
+                    <form id="commentForm" class="comment-form" novalidate>
+                        <div class="comment-form__rating">
+                            <label>Đánh giá của bạn *</label>
+                            <div class="star-rating" data-rating="0">
+                                <i class="far fa-star" data-value="1"></i>
+                                <i class="far fa-star" data-value="2"></i>
+                                <i class="far fa-star" data-value="3"></i>
+                                <i class="far fa-star" data-value="4"></i>
+                                <i class="far fa-star" data-value="5"></i>
+                            </div>
+                            <input type="hidden" name="rating" id="commentRating" required>
+                        </div>
+                        <div class="comment-form__grid">
+                            <label>
+                                <span>Tên của bạn *</span>
+                                <input type="text" name="name" id="commentName" placeholder="Nguyễn Văn A" required>
+                            </label>
+                            <label>
+                                <span>Email</span>
+                                <input type="email" name="email" id="commentEmail" placeholder="email@example.com">
+                            </label>
+                        </div>
+                        <label>
+                            <span>Nhận xét của bạn *</span>
+                            <textarea name="comment" id="commentText" rows="5" placeholder="Chia sẻ trải nghiệm của bạn về dịch vụ, sản phẩm, hoặc đội ngũ của Quyền Hair..." required></textarea>
+                        </label>
+                        <button type="submit" class="btn btn--primary">
+                            <i class="fas fa-paper-plane"></i>
+                            Gửi đánh giá
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Comments Filter -->
+                <div class="comments-filter">
+                    <button class="filter-btn active" data-filter="all">Tất cả</button>
+                    <button class="filter-btn" data-filter="5">5 sao</button>
+                    <button class="filter-btn" data-filter="4">4 sao</button>
+                    <button class="filter-btn" data-filter="3">3 sao</button>
+                    <button class="filter-btn" data-filter="positive">Tích cực</button>
+                </div>
+
+                <!-- Comments List -->
+                <div id="commentsList" class="comments-list">
+                    <!-- Comments will be dynamically inserted here -->
+                </div>
+
+                <!-- Load More -->
+                <div class="comments-load-more" style="display: none;">
+                    <button id="loadMoreComments" class="btn btn--outline">
+                        <i class="fas fa-chevron-down"></i>
+                        Xem thêm đánh giá
+                    </button>
                 </div>
             </div>
         </section>
@@ -673,8 +919,8 @@
                     <p>Đăng ký nhận khuyến mãi và xu hướng mới nhất từ Quyền Hair.</p>
                     <form class="footer__form">
                         <label class="sr-only" for="newsletter-email">Email</label>
-                        <input id="newsletter-email" type="email" placeholder="Email của bạn">
-
+                        <input id="newsletter-email" type="email" placeholder="Email của bạn" required>
+                        <button type="submit" aria-label="Đăng ký nhận bản tin">Đăng ký</button>
                     </form>
                 </section>
             </div>
