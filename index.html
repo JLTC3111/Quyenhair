@@ -126,17 +126,20 @@
 
     <!-- Navigation -->
     <nav class="nav" role="navigation" aria-label="Điều hướng chính">
+        <div class="nav__overlay" id="navOverlay"></div>
         <div class="nav__container">
+            <button class="nav__toggle" aria-label="Mở menu" aria-expanded="false">
+                <svg class="hamburger-icon" viewBox="0 0 100 100" width="30" height="30">
+                    <line class="hamburger-line hamburger-line--top" x1="15" y1="25" x2="85" y2="25" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                    <line class="hamburger-line hamburger-line--middle" x1="15" y1="50" x2="85" y2="50" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                    <line class="hamburger-line hamburger-line--bottom" x1="15" y1="75" x2="85" y2="75" stroke="currentColor" stroke-width="8" stroke-linecap="round"/>
+                </svg>
+            </button>
+
             <a href="#home" class="nav__logo" aria-label="Quyền Hair - Trang chủ">
                 <i class="fas fa-cut" aria-hidden="true"></i>
                 <span>Quyền Hair</span>
             </a>
-
-            <button class="nav__toggle" aria-label="Mở menu" aria-expanded="false">
-                <span class="nav__toggle-bar"></span>
-                <span class="nav__toggle-bar"></span>
-                <span class="nav__toggle-bar"></span>
-            </button>
 
             <ul class="nav__menu">
                 <li class="nav__item--dropdown">

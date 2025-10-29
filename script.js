@@ -106,6 +106,7 @@ class NavigationHandler {
         this.nav = document.querySelector('.nav') || document.querySelector('nav');
         this.navToggle = document.querySelector('.nav__toggle');
         this.navMenu = document.querySelector('.nav__menu') || document.querySelector('nav ul');
+        this.navOverlay = document.querySelector('.nav__overlay') || document.getElementById('navOverlay');
         this.navLinks = document.querySelectorAll('.nav__link, nav ul li a');
         this.lastScrollTop = 0;
         this.scrollThreshold = 100;
@@ -124,12 +125,8 @@ class NavigationHandler {
         }
 
         window.addEventListener('resize', debounce(() => {
-            if (window.innerWidth > 768 && this.navMenu) {
-                this.navMenu.classList.remove('active');
-                if (this.navToggle) {
-                    this.navToggle.classList.remove('active');
-                }
-                document.body.style.overflow = '';
+            if (window.innerWidth > 1024 && this.navMenu) {
+                this.closeDrawer();
             }
         }, 250));
     }
@@ -145,11 +142,7 @@ class NavigationHandler {
                     
                     if (target) {
                         if (this.navMenu && this.navMenu.classList.contains('active')) {
-                            this.navMenu.classList.remove('active');
-                            if (this.navToggle) {
-                                this.navToggle.classList.remove('active');
-                            }
-                            document.body.style.overflow = '';
+                            this.closeDrawer();
                         }
 
                         const navHeight = this.nav?.offsetHeight || 70;
@@ -169,35 +162,73 @@ class NavigationHandler {
         });
     }
 
-    initMobileMenu() {
-        this.navToggle.addEventListener('click', () => {
-            this.navToggle.classList.toggle('active');
-            this.navMenu.classList.toggle('active');
-            
-            if (this.navMenu.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
+    closeDrawer() {
+        if (this.navMenu) {
+            this.navMenu.classList.remove('active');
+        }
+        if (this.navToggle) {
+            this.navToggle.classList.remove('active');
+        }
+        if (this.navOverlay) {
+            this.navOverlay.classList.remove('active');
+        }
+        document.body.style.overflow = '';
+        
+        if (this.navToggle) {
+            this.navToggle.setAttribute('aria-expanded', 'false');
+        }
+    }
 
-            const isExpanded = this.navMenu.classList.contains('active');
-            this.navToggle.setAttribute('aria-expanded', isExpanded);
+    openDrawer() {
+        if (this.navMenu) {
+            this.navMenu.classList.add('active');
+        }
+        if (this.navToggle) {
+            this.navToggle.classList.add('active');
+        }
+        if (this.navOverlay) {
+            this.navOverlay.classList.add('active');
+        }
+        document.body.style.overflow = 'hidden';
+        
+        if (this.navToggle) {
+            this.navToggle.setAttribute('aria-expanded', 'true');
+        }
+    }
+
+    initMobileMenu() {
+        // Toggle button click
+        this.navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isActive = this.navMenu.classList.contains('active');
+            
+            if (isActive) {
+                this.closeDrawer();
+            } else {
+                this.openDrawer();
+            }
         });
 
+        // Overlay click to close drawer
+        if (this.navOverlay) {
+            this.navOverlay.addEventListener('click', () => {
+                this.closeDrawer();
+            });
+        }
+
+        // Close drawer when clicking outside
         document.addEventListener('click', (e) => {
-            if (this.navMenu.classList.contains('active') &&
+            if (this.navMenu && this.navMenu.classList.contains('active') &&
                 !this.navMenu.contains(e.target) &&
                 !this.navToggle.contains(e.target)) {
-                this.navMenu.classList.remove('active');
-                this.navToggle.classList.remove('active');
-                document.body.style.overflow = '';
+                this.closeDrawer();
             }
         });
 
+        // Close drawer with Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.navMenu.classList.contains('active')) {
-                this.navMenu.classList.remove('active');
-                this.navToggle.classList.remove('active');
+                this.closeDrawer();
                 this.navToggle.focus();
                 document.body.style.overflow = '';
             }
